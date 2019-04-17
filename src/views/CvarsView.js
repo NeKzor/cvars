@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
+import Zoom from '@material-ui/core/Zoom';
 import Grid from '@material-ui/core/Grid';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import CvarsTable from '../components/CvarsTable';
 import CvarsFilter from '../components/CvarsFilter';
 import Client from '../Client';
@@ -22,7 +23,10 @@ const styles = theme => ({
         margin: 0,
         top: 'auto',
         right: 20,
-        bottom: 20,
+        bottom: 75,
+        [theme.breakpoints.up('lg')]: {
+            bottom: 20,
+        },
         left: 'auto',
         position: 'fixed',
     },
@@ -59,6 +63,17 @@ class CvarsView extends React.Component {
 
     updateFilter = (filter) => this.setState({ filter });
 
+    jumpToTop = () => {
+        const smoothScroll = () => {
+            const y = document.documentElement.scrollTop;
+            if (y > 0) {
+                window.requestAnimationFrame(smoothScroll);
+                window.scrollTo(0, y - (y / 5));
+            }
+        };
+        smoothScroll();
+    };
+
     render() {
         const { classes, hasNewCheckbox } = this.props;
         const { cvars, filter } = this.state;
@@ -66,8 +81,8 @@ class CvarsView extends React.Component {
         return (
             <>
                 <Grid container>
-                    <Grid item xs={false} md={1} lg={2} />
-                    <Grid item xs={12} md={10} lg={9}>
+                    <Grid item xs={false} sm={false} md={false} lg={1} xl={2} />
+                    <Grid item xs={12} sm={12} md={12} lg={10} xl={8} >
                         <Paper className={classes.filterBox}>
                             <CvarsFilter searchFilter={this.updateFilter} newCheckbox={hasNewCheckbox} />
                         </Paper>
@@ -77,9 +92,11 @@ class CvarsView extends React.Component {
                         </Paper>
                     </Grid>
                 </Grid>
-                <Fab title="Jump to top" color="primary" className={classes.fab} onClick={() => window.scroll(0, 0)}>
-                    <KeyboardArrowUpIcon />
-                </Fab>
+                <Zoom in={cvars.length !== 0} timeout={1000}>
+                    <Fab title="Jump to top" color="primary" className={classes.fab} onClick={this.jumpToTop}>
+                        <KeyboardArrowUpIcon />
+                    </Fab>
+                </Zoom>
             </>
         );
     }

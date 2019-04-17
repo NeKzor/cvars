@@ -19,8 +19,8 @@ class MainView extends React.Component {
         return (
             <>
                 <Grid container>
-                    <Grid item xs={false} md={1} lg={2} />
-                    <Grid item xs={12} md={10} lg={8}>
+                    <Grid item xs={false} sm={false} md={1} lg={2} xl={2} />
+                    <Grid item xs={12} sm={12} md={10} lg={8} xl={8} >
                         <GameGrid games={games} />
                     </Grid>
                 </Grid>

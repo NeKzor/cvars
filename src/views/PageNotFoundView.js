@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -28,14 +29,16 @@ class PageNotFoundView extends React.Component {
         return (
             <>
                 <Grid container>
-                    <Grid item xs={false} md={1} lg={3} />
-                    <Grid item xs={12} md={10} lg={6}>
-                        <Paper className={classes.infoBox}>
-                            <List dense>
-                                <ListItem><Typography component="h2" variant="h1">404</Typography></ListItem>
-                                <ListItem><Typography component="h2" variant="h5">Page Not Found</Typography></ListItem>
-                            </List>
-                        </Paper>
+                    <Grid item xs={false} sm={false} md={2} lg={3} xl={3} />
+                    <Grid item xs={12} sm={12} md={8} lg={6} xl={6} >
+                        <Fade in={true} timeout={500}>
+                            <Paper className={classes.infoBox}>
+                                <List dense>
+                                    <ListItem><Typography component="h2" variant="h1">404</Typography></ListItem>
+                                    <ListItem><Typography component="h2" variant="h5">Page Not Found</Typography></ListItem>
+                                </List>
+                            </Paper>
+                        </Fade>
                     </Grid>
                 </Grid>
             </>

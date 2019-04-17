@@ -2,15 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Fade from '@material-ui/core/Fade';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        minWidth: 300,
-        width: '100%',
-    },
     image: {
         position: 'relative',
         height: 200,
@@ -69,30 +65,29 @@ class GameGrid extends React.Component {
         const { classes, games } = this.props;
 
         return (
-            <div className={classes.root}>
-                {Object.keys(games).map((route, idx) => {
-                    return (
-                        <ButtonBase
-                            key={idx}
-                            focusRipple
-                            className={classes.image}
-                            focusVisibleClassName={classes.focusVisible}
-                            style={{
-                                width: '33.3333%',
-                            }}
-                            component={Link}
-                            to={route}
-                        >
-                            <span
-                                className={classes.imageSrc}
-                                style={{
-                                    backgroundImage: `url(${games[route].image})`,
-                                }}
-                            />
-                            <span className={classes.imageBackdrop} />
-                        </ButtonBase>
-                    )
-                })}
+            <div>
+                <Grid container spacing={0}>
+                    {Object.keys(games).map((route, idx) => {
+                        return (
+                            <Grid key={idx} item xs={12} sm={12} md={6} lg={4} xl={3} >
+                                <Fade in={true} timeout={1000 * (1 - Math.exp(-(idx + 1)))}>
+                                    <ButtonBase
+                                        focusRipple
+                                        className={classes.image}
+                                        focusVisibleClassName={classes.focusVisible}
+                                        style={{ width: '100%' }}
+                                        component={Link}
+                                        to={route}
+                                    >
+                                        <span className={classes.imageSrc} style={{ backgroundImage: `url(${games[route].image})` }} />
+                                        <span className={classes.imageBackdrop} />
+                                    </ButtonBase>
+                                </Fade>
+                            </Grid>
+                        )
+                    })}
+
+                </Grid>
             </div>
         );
     }

@@ -11,6 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles } from '@material-ui/core/styles';
 import { stableSort } from '../utils/stableSort';
 
 FA.add(faWindows);
@@ -76,8 +77,15 @@ class CvarsTableHead extends React.Component {
     }
 }
 
+const styles = _ => ({
+    root: {
+        overflowX: 'auto',
+    },
+});
+
 class CvarsTable extends React.Component {
     static propTypes = {
+        classes: PropTypes.object.isRequired,
         data: PropTypes.array.isRequired,
     };
 
@@ -100,7 +108,7 @@ class CvarsTable extends React.Component {
     };
 
     handleChangePage = (_, page) => {
-        this.setState({ page });
+        this.setState({ page }, () => window.scroll(0, document.body.scrollHeight));
     };
 
     handleChangeRowsPerPage = (ev) => {
@@ -108,11 +116,11 @@ class CvarsTable extends React.Component {
     };
 
     render() {
-        const { data } = this.props;
+        const { classes, data } = this.props;
         const { order, orderBy, rowsPerPage, page } = this.state;
 
         return (
-            <>
+            <div className={classes.root}>
                 <Table aria-labelledby="tableTitle">
                     <CvarsTableHead
                         order={order}
@@ -156,18 +164,14 @@ class CvarsTable extends React.Component {
                     rowsPerPage={rowsPerPage}
                     page={page}
                     labelDisplayedRows={() => ''}
-                    backIconButtonProps={{
-                        'aria-label': 'Previous Page',
-                    }}
-                    nextIconButtonProps={{
-                        'aria-label': 'Next Page',
-                    }}
+                    backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+                    nextIconButtonProps={{ 'aria-label': 'Next Page' }}
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-            </>
+            </div>
         );
     }
 }
 
-export default CvarsTable;
+export default withStyles(styles)(CvarsTable);

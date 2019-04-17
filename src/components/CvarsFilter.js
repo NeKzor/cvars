@@ -7,10 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = _ => ({
+const styles = theme => ({
     floatRight: {
-        float: 'right',
-        paddingRight: 20,
+        [theme.breakpoints.up('md')]: {
+            float: 'right',
+            paddingRight: 20,
+        },
         paddingTop: 3,
     },
 });
@@ -75,7 +77,7 @@ class CvarsFilter extends React.Component {
 
         return (
             <Grid container>
-                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                <Grid item xs={12} sm={12} md={4} lg={5} xl={6}>
                     <FormGroup row style={{ paddingTop: '15px', paddingRight: '10px' }}>
                         <Input
                             title="Separate multiple search terms with spaces in between."
@@ -88,7 +90,7 @@ class CvarsFilter extends React.Component {
                         />
                     </FormGroup>
                 </Grid>
-                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                <Grid item xs={12} sm={12} md={8} lg={7} xl={6}>
                     <div className={classes.floatRight}>
                         <FormGroup row>
                             <FormControlLabel
