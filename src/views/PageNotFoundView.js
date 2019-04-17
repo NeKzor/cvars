@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-    aboutBox: {
+    infoBox: {
         padding: theme.spacing.unit * 3,
     },
 });
@@ -30,8 +30,8 @@ class PageNotFoundView extends React.Component {
                 <Grid container>
                     <Grid item xs={false} md={1} lg={3} />
                     <Grid item xs={12} md={10} lg={6}>
-                        <Paper className={classes.aboutBox}>
-                            <List className={classes.list} dense>
+                        <Paper className={classes.infoBox}>
+                            <List dense>
                                 <ListItem><Typography component="h2" variant="h1">404</Typography></ListItem>
                                 <ListItem><Typography component="h2" variant="h5">Page Not Found</Typography></ListItem>
                             </List>

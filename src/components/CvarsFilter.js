@@ -19,6 +19,7 @@ class CvarsFilter extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         searchFilter: PropTypes.func.isRequired,
+        newCheckbox: PropTypes.bool,
     };
 
     state = {
@@ -76,13 +77,22 @@ class CvarsFilter extends React.Component {
             <Grid container>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                     <FormGroup row style={{ paddingTop: '15px', paddingRight: '10px' }}>
-                        <Input title="Separate multiple search terms with spaces in between." placeholder="Search" inputProps={{ 'aria-label': 'Description' }} onChange={this.setSearchTerm} disableUnderline={true} fullWidth margin="dense" />
+                        <Input
+                            title="Separate multiple search terms with spaces in between."
+                            placeholder="Search"
+                            inputProps={{ 'aria-label': 'Description' }}
+                            onChange={this.setSearchTerm}
+                            disableUnderline={true}
+                            fullWidth
+                            margin="dense"
+                        />
                     </FormGroup>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                     <div className={classes.floatRight}>
                         <FormGroup row>
                             <FormControlLabel
+                                label="Name"
                                 control={
                                     <Checkbox
                                         checked={name}
@@ -91,9 +101,9 @@ class CvarsFilter extends React.Component {
                                         color="primary"
                                     />
                                 }
-                                label="Name"
                             />
                             <FormControlLabel
+                                label="Default"
                                 control={
                                     <Checkbox
                                         checked={defaultValue}
@@ -102,7 +112,6 @@ class CvarsFilter extends React.Component {
                                         color="primary"
                                     />
                                 }
-                                label="Default"
                             />
                             <FormControlLabel
                                 control={
@@ -116,6 +125,7 @@ class CvarsFilter extends React.Component {
                                 label="Flags"
                             />
                             <FormControlLabel
+                                label="System"
                                 control={
                                     <Checkbox
                                         checked={system}
@@ -124,9 +134,9 @@ class CvarsFilter extends React.Component {
                                         color="primary"
                                     />
                                 }
-                                label="System"
                             />
                             <FormControlLabel
+                                label="Help Text"
                                 control={
                                     <Checkbox
                                         checked={help}
@@ -135,10 +145,10 @@ class CvarsFilter extends React.Component {
                                         color="primary"
                                     />
                                 }
-                                label="Help Text"
                             />
                             {newCheckbox &&
                                 <FormControlLabel
+                                    label="New"
                                     control={
                                         <Checkbox
                                             checked={newOnly}
@@ -147,7 +157,6 @@ class CvarsFilter extends React.Component {
                                             color="primary"
                                         />
                                     }
-                                    label="New"
                                 />
                             }
                         </FormGroup>

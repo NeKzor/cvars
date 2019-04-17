@@ -38,9 +38,10 @@ export class Flags extends Enum {
         return (1 << this.count - 1) - 1;
     }
     list(value) {
-        const keys = Object.keys(this).filter(k => k !== 'count' && Number.isNaN(parseInt(k)));
-        const result = keys.filter(key => (value & this[key]) !== 0);
-        return result.length !== 0 ? result : [this[0]];
+        const list = Object.keys(this)
+            .filter(k => k !== 'count' && Number.isNaN(parseInt(k)))
+            .filter(key => (value & this[key]) !== 0);
+        return list.length !== 0 ? list : [this[0]];
     }
 }
 

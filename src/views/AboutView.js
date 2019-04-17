@@ -9,9 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-    help: {
-        cursor: 'help',
-    },
     aboutBox: {
         padding: theme.spacing.unit * 3,
     },
@@ -26,18 +23,26 @@ class AboutView extends React.Component {
         super();
 
         this.description = [
-            'This web application exposes every available and hidden console command for various Source Engine games.',
+            [
+                'This web application contains a large console command database of various Source Engine games.',
+                'Additionally it lists hidden and OS specific commands.'
+            ],
             '',
             'Q/A',
             '',
             [
-                'Q: What about commands like restart_level or impulse?',
-                'A: These commands are not registered by the ICvar interface and only exist hard-coded in the RunCommand function of entities.',
+                'Q: What are "New" commands?',
+                'A: Commands that have been added in an updated engine version. This only applies for games that are very similar e.g. INFRA is comparable to Portal 2.',
             ],
             '',
             [
                 'Q: How about showing the exact arguments of a console command?',
                 'A: Unfortunately the engine does not provide useful information about passing arguments.',
+            ],
+            '',
+            [
+                'Q: What about commands like restart_level or impulse?',
+                'A: These commands are not registered by the ICvar interface and only exist hard-coded in ClientCommand functions of entities.',
             ],
         ];
     }
@@ -52,7 +57,7 @@ class AboutView extends React.Component {
         const description = this.description.map((text, idx) => (
             <ListItem key={idx}>
                 <Typography variant="body1">
-                    {Array.isArray(text) ? text.map((x, idx) => (<React.Fragment key={idx}>{x}<br /></React.Fragment>)) : text}
+                    {Array.isArray(text) ? text.map((item, idx) => (<React.Fragment key={idx}>{item}<br /></React.Fragment>)) : text}
                 </Typography>
             </ListItem>
         ));
@@ -66,7 +71,7 @@ class AboutView extends React.Component {
                     <Grid item xs={false} md={1} lg={3} />
                     <Grid item xs={12} md={10} lg={6}>
                         <Paper className={classes.aboutBox}>
-                            <List className={classes.list} dense>
+                            <List dense>
                                 <ListItem><Typography component="h2" variant="h5">Source Engine Console Commands & Variables</Typography></ListItem>
                                 {description}
                                 <ListItem></ListItem>

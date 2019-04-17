@@ -31,14 +31,7 @@ const styles = theme => ({
             },
         },
     },
-    focusVisible: {},
-    imageButton: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        color: theme.palette.common.white,
+    focusVisible: {
     },
     imageSrc: {
         position: 'absolute',
@@ -96,9 +89,10 @@ class GameGrid extends React.Component {
                                     backgroundImage: `url(${games[route].image})`,
                                 }}
                             />
-                            <span className={classes.imageBackdrop}/>
+                            <span className={classes.imageBackdrop} />
                         </ButtonBase>
-                )})}
+                    )
+                })}
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library as FA } from '@fortawesome/fontawesome-svg-core';
 import { faWindows, faLinux } from '@fortawesome/free-brands-svg-icons';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,8 +13,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import { stableSort } from '../utils/stableSort';
 
-library.add(faWindows);
-library.add(faLinux);
+FA.add(faWindows);
+FA.add(faLinux);
 
 const rows = [
     { id: 'name', numeric: false, sortable: true, label: 'Name' },
@@ -32,7 +32,7 @@ class CvarsTableHead extends React.Component {
         rowCount: PropTypes.number.isRequired,
     };
 
-    createSortHandler = property => event => {
+    createSortHandler = (property) => (event) => {
         this.props.onRequestSort(event, property);
     };
 
@@ -130,7 +130,9 @@ class CvarsTable extends React.Component {
                                     <TableRow hover tabIndex={-1} key={cvar.name + cvar.flags}>
                                         <TableCell>{cvar.name}</TableCell>
                                         <TableCell>{cvar.default}</TableCell>
-                                        <TableCell title={cvar.flags}>{flags.map((flag, idx) => (<React.Fragment key={idx}>{flag}<br /></React.Fragment>))}</TableCell>
+                                        <TableCell title={cvar.flags}>
+                                            {flags.map((flag, idx) => (<React.Fragment key={idx}>{flag}<br /></React.Fragment>))}
+                                        </TableCell>
                                         <TableCell>
                                             {os !== 'Both'
                                                 ? <FontAwesomeIcon title={os} icon={['fab', os.toLowerCase()]} size="lg" />

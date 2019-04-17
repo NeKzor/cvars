@@ -19,58 +19,34 @@ const styles = theme => ({
     root: {
         paddingBottom: theme.spacing.unit * 8,
     },
-    list: {
-        width: theme.spacing.unit * 25,
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
     },
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
     },
-    drawer: {
-        width: 240,
-        flexShrink: 0,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
     flex: {
         flex: 1,
     },
-    login: {
-        marginLeft: -12,
-        marginRight: 20,
+    list: {
+        width: theme.spacing.unit * 25,
     },
 });
 
 class AppBarWithDrawer extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        games: PropTypes.object.isRequired,
     };
-
-    constructor() {
-        super();
-
-        this.homepage = '';
-        this.pageLinks = [
-            { text: 'Half-Life 2', link: 'hl2' },
-            { text: 'Portal', link: 'p1' },
-            { text: 'Portal 2', link: 'p2' },
-            { text: 'The Beginners Guide', link: 'tbg' },
-            { text: 'The Stanley Parable', link: 'tsp' },
-            { text: 'INFRA', link: 'infra' },
-        ];
-    }
 
     state = {
         open: false,
     };
 
-    showDrawer = (state) => () => {
-        this.setState({ open: state });
-    };
-
-    gotoPage = (page) => () => {
-        window.open(this.homepage + page, '_self');
+    showDrawer = (open) => () => {
+        this.setState({ open });
     };
 
     render() {
@@ -113,7 +89,13 @@ class AppBarWithDrawer extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" color="inherit" className={classes.flex}>
-                            <Link href="/" color="inherit" underline="none">{game ? game.title + ' Cvars' : pathname === '/about' ? 'About' : 'Cvars'}</Link>
+                            <Link component={RouterLink} to={'/'} color="inherit" underline="none">
+                                {game
+                                    ? game.title + ' Cvars'
+                                    : (pathname === '/about')
+                                        ? 'About'
+                                        : 'Cvars'}
+                            </Link>
                         </Typography>
                     </Toolbar>
                 </AppBar>

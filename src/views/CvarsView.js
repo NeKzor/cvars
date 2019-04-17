@@ -31,6 +31,7 @@ const styles = theme => ({
 class CvarsView extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        hasNewCheckbox: PropTypes.bool,
     };
 
     state = {

@@ -1,4 +1,4 @@
-class Client {
+export default class Client {
     static async get(route) {
         console.log(`Fetching /api${route}.json`);
         let res = await fetch(`https://raw.githubusercontent.com/NeKzor/cvars/api${route}.json`);
@@ -6,5 +6,3 @@ class Client {
         return json.Cvars;
     }
 }
-
-export default Client;
