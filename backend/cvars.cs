@@ -27,19 +27,19 @@ namespace nekzor.github.io
             var builders = new List<(string, string, PageBuilder)>();
             foreach (var (game, comp) in data)
             {
-                var builder = new PageBuilder(OperatingSystem.Linux);
+                var builder = new PageBuilder();
 
                 var file = App.Data + game + "_linux.cvars";
                 if (System.IO.File.Exists(file))
                 {
-                    var reference = new PageBuilder(OperatingSystem.Windows);
-                    await builder.Import(file);
-                    await reference.Import(App.Data + game + "_windows.cvars");
+                    var reference = new PageBuilder();
+                    await builder.Import(file, OperatingSystem.Linux);
+                    await reference.Import(App.Data + game + "_windows.cvars", OperatingSystem.Windows);
                     await builder.MergeUnique(reference);
                 }
                 else
                 {
-                    await builder.Import(App.Data + game + "_windows.cvars");
+                    await builder.Import(App.Data + game + "_windows.cvars", OperatingSystem.Windows);
                 }
 
                 builders.Add((game, comp, builder));
@@ -88,10 +88,9 @@ namespace nekzor.github.io
         public List<Cvar> Cvars { get; set; }
         public OperatingSystem Os { get; set; }
 
-        public PageBuilder(OperatingSystem os)
+        public PageBuilder()
         {
             Cvars = new List<Cvar>();
-            Os = os;
         }
 
         public Task FindRealUnique(PageBuilder source)
@@ -125,6 +124,10 @@ namespace nekzor.github.io
                     match.Os = source.Os;
                     unique.Add(match);
                 }
+                else
+                {
+                    match.Os = OperatingSystem.Both;
+                }
             }
             foreach (var match in Cvars)
             {
@@ -132,6 +135,10 @@ namespace nekzor.github.io
                 {
                     Console.WriteLine($"[{Os.ToString()}] {match.Name}");
                     match.Os = Os;
+                }
+                else
+                {
+                    match.Os = OperatingSystem.Both;
                 }
             }
 
@@ -157,9 +164,10 @@ namespace nekzor.github.io
             return Task.CompletedTask;
         }
 
-        public Task Import(string file)
+        public Task Import(string file, OperatingSystem os = OperatingSystem.Both)
         {
             Cvars.Clear();
+            Os = os;
 
             using var fs = System.IO.File.OpenRead(file);
             using var sr = new System.IO.StreamReader(fs);
@@ -176,7 +184,7 @@ namespace nekzor.github.io
                     DefaultValue = values[1],
                     FlagsValue = int.Parse(values[2]),
                     HelpText = values[3],
-                    Os = OperatingSystem.Both
+                    Os = Os
                 });
             }
 

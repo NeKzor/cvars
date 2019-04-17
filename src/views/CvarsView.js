@@ -45,7 +45,6 @@ class CvarsView extends React.Component {
         document.title = (game ? game.title + ' | ' : '') + 'Cvars | ' + document.location.host;
 
         const cvars = await Client.get(pathname);
-        console.log(cvars.length);
         for (let cvar of cvars) {
             cvar.getFlags = function () {
                 return this._flags ? this._flags : this._flags = FCVAR.list(this.flags);

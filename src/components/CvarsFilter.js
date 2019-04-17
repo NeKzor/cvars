@@ -76,7 +76,7 @@ class CvarsFilter extends React.Component {
             <Grid container>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                     <FormGroup row style={{ paddingTop: '15px', paddingRight: '10px' }}>
-                        <Input title="Separate multiple search terms with a space." placeholder="Search" inputProps={{ 'aria-label': 'Description' }} onChange={this.setSearchTerm} disableUnderline={true} fullWidth margin="dense" />
+                        <Input title="Separate multiple search terms with spaces in between." placeholder="Search" inputProps={{ 'aria-label': 'Description' }} onChange={this.setSearchTerm} disableUnderline={true} fullWidth margin="dense" />
                     </FormGroup>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
