@@ -1,17 +1,31 @@
 import React from 'react';
 import { AppContext } from './withContext';
 
-const SourceGame = (title, image) => ({ ['/' + title.toLowerCase().replace(/ /g, '-')]: { title, image } });
+const SourceGame = (title, appid) => {
+    return {
+        ['/' + title.toLowerCase().replace(/[ :]+/g, '-')]: {
+            title,
+            image: `https://steamcdn-a.akamaihd.net/steam/apps/${appid}/header.jpg`
+        },
+    };
+};
 
 class ContextProvider extends React.Component {
     state = {
         games: {
-            ...SourceGame('Half-Life 2',         'https://steamcdn-a.akamaihd.net/steam/apps/220/header.jpg?t=1551310885'),
-            ...SourceGame('Portal',              'https://steamcdn-a.akamaihd.net/steam/apps/400/header.jpg?t=1550175754'),
-            ...SourceGame('Portal 2',            'https://steamcdn-a.akamaihd.net/steam/apps/620/header.jpg?t=1554956936'),
-            ...SourceGame('The Beginners Guide', 'https://steamcdn-a.akamaihd.net/steam/apps/303210/header.jpg?t=1549815651'),
-            ...SourceGame('The Stanley Parable', 'https://steamcdn-a.akamaihd.net/steam/apps/221910/header.jpg?t=1553766468'),
-            ...SourceGame('INFRA',               'https://steamcdn-a.akamaihd.net/steam/apps/251110/header.jpg?t=1548548098'),
+            ...SourceGame('Half-Life 2',            '220'),
+            ...SourceGame('Half-Life: Source',      '280'),
+            ...SourceGame('Black Mesa',             '362890'),
+            ...SourceGame('Portal',                 '400'),
+            ...SourceGame('Portal 2',               '620'),
+            ...SourceGame('Portal 2 Sixense',       '247120'),
+            ...SourceGame('The Beginners Guide',    '303210'),
+            ...SourceGame('The Stanley Parable',    '221910'),
+            ...SourceGame('INFRA',                  '251110'),
+            ...SourceGame('Global Offensive',       '730'),
+            ...SourceGame('Counter-Strike: Source', '240'),
+            ...SourceGame('Team Fortress 2',        '440'),
+            ...SourceGame('Alien Swarm',            '630'),
         },
     };
 

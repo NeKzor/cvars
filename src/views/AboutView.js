@@ -33,7 +33,7 @@ class AboutView extends React.Component {
             '',
             [
                 'Q: What are "New" commands?',
-                'A: Commands that have been added in an updated engine version. This only applies for games that are very similar e.g. INFRA is comparable to Portal 2.',
+                'A: Commands that have been added in an updated engine version. This only applies for games that derive from other games e.g. INFRA is based on Portal 2 engine.',
             ],
             '',
             [

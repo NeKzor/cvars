@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json;
 
 namespace nekzor.github.io
@@ -15,13 +13,21 @@ namespace nekzor.github.io
 
         internal static async Task Main()
         {
-            var data = new List<(string, string)> {
+            var data = new List<(string, string)>()
+            {
                 ("half-life-2", string.Empty),
                 ("portal", string.Empty),
                 ("portal-2", string.Empty),
-                ("the-beginners-guide", "portal-2"),
+                ( "the-beginners-guide", "portal-2"),
                 ("the-stanley-parable", "portal-2"),
-                ("infra", "portal-2")
+                ("infra", "portal-2"),
+                ("global-offensive", string.Empty),
+                ("black-mesa", "half-life-2"),
+                ("portal-2-sixense", "portal-2"),
+                ("alien-swarm", string.Empty),
+                ("counter-strike-source", string.Empty),
+                ("half-life-source", string.Empty),
+                ("team-fortress-2", string.Empty)
             };
 
             var builders = new List<(string, string, PageBuilder)>();
@@ -55,6 +61,18 @@ namespace nekzor.github.io
 
                 await builder.Export(App.Api + game + ".json");
             }
+        }
+
+        internal static async Task PrintNew()
+        {
+            var game = "portal-2";
+            //var game = "half-life-2";
+            var builder = new PageBuilder();
+            var file = App.Data + game + "-new_windows.cvars";
+            var reference = new PageBuilder();
+            await builder.Import(file, OperatingSystem.Linux);
+            await reference.Import(App.Data + game + "_windows.cvars", OperatingSystem.Windows);
+            await builder.MergeUnique(reference);
         }
     }
 
@@ -187,6 +205,8 @@ namespace nekzor.github.io
                     Os = Os
                 });
             }
+
+            Console.WriteLine($"Imported {Cvars.Count} cvars from {file}");
 
             return Task.CompletedTask;
         }
