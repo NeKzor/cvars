@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     image: {
         position: 'relative',
         height: 200,
@@ -23,12 +22,10 @@ const styles = theme => ({
             },
             '& $imageMarked': {
                 opacity: 0.3,
-
             },
         },
     },
-    focusVisible: {
-    },
+    focusVisible: {},
     imageSrc: {
         position: 'absolute',
         left: 0,
@@ -53,44 +50,36 @@ const styles = theme => ({
         backgroundColor: theme.palette.common.white,
         opacity: 0,
     },
-});
+}));
 
-class GameGrid extends React.Component {
-    static propTypes = {
-        classes: PropTypes.object.isRequired,
-        games: PropTypes.object.isRequired,
-    };
+const GameGrid = ({ games }) => {
+    const classes = useStyles();
 
-    render() {
-        const { classes, games } = this.props;
+    return (
+        <div>
+            <Grid container spacing={0}>
+                {Object.keys(games).map((route, idx) => {
+                    return (
+                        <Grid key={idx} item xs={12} sm={12} md={6} lg={4} xl={3}>
+                            <Fade in={true} timeout={1000 * (1 - Math.exp(-(idx + 1)))}>
+                                <ButtonBase
+                                    focusRipple
+                                    className={classes.image}
+                                    focusVisibleClassName={classes.focusVisible}
+                                    style={{ width: '100%' }}
+                                    component={Link}
+                                    to={route}
+                                >
+                                    <span className={classes.imageSrc} style={{ backgroundImage: `url(${games[route].image})` }} />
+                                    <span className={classes.imageBackdrop} />
+                                </ButtonBase>
+                            </Fade>
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </div>
+    );
+};
 
-        return (
-            <div>
-                <Grid container spacing={0}>
-                    {Object.keys(games).map((route, idx) => {
-                        return (
-                            <Grid key={idx} item xs={12} sm={12} md={6} lg={4} xl={3} >
-                                <Fade in={true} timeout={1000 * (1 - Math.exp(-(idx + 1)))}>
-                                    <ButtonBase
-                                        focusRipple
-                                        className={classes.image}
-                                        focusVisibleClassName={classes.focusVisible}
-                                        style={{ width: '100%' }}
-                                        component={Link}
-                                        to={route}
-                                    >
-                                        <span className={classes.imageSrc} style={{ backgroundImage: `url(${games[route].image})` }} />
-                                        <span className={classes.imageBackdrop} />
-                                    </ButtonBase>
-                                </Fade>
-                            </Grid>
-                        )
-                    })}
-
-                </Grid>
-            </div>
-        );
-    }
-}
-
-export default withStyles(styles)(GameGrid);
+export default GameGrid;

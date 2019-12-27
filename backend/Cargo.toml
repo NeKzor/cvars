@@ -1,0 +1,10 @@
+[package]
+name = "cvars"
+version = "1.0.0"
+authors = ["NeKz <nekzor@users.noreply.github.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_repr = "0.1"

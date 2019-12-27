@@ -1,23 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useLocation } from 'react-router';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
 import Grid from '@material-ui/core/Grid';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CvarsTable from '../components/CvarsTable';
 import CvarsFilter from '../components/CvarsFilter';
-import Client from '../Client';
+import Api from '../Api';
 import { FCVAR, OS } from '../Types';
-import { withContext } from '../withContext';
+import { useIsMounted, useTitle } from '../Hooks';
+import AppState from '../AppState';
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     filterBox: {
         paddingLeft: 20,
         padding: 10,
-        marginBottom: theme.spacing.unit * 3,
+        marginBottom: theme.spacing(3),
     },
     fab: {
         margin: 0,
@@ -30,76 +31,80 @@ const styles = theme => ({
         left: 'auto',
         position: 'fixed',
     },
-});
+}));
 
-class CvarsView extends React.Component {
-    static propTypes = {
-        classes: PropTypes.object.isRequired,
-        hasNewCheckbox: PropTypes.bool,
-    };
+const CvarsView = ({ hasNewCheckbox }) => {
+    const isMounted = useIsMounted();
 
-    state = {
-        cvars: [],
-        filter: () => true,
-    };
+    const { pathname, search } = useLocation();
+    const query = new URLSearchParams(search);
+    const defaultSearch = query.get('search');
 
-    async componentDidMount() {
-        const { location: { pathname }, games } = this.props;
+    const {
+        state: { games },
+    } = React.useContext(AppState);
+    const game = games[pathname];
 
-        const game = games[pathname];
-        document.title = (game ? game.title + ' | ' : '') + 'Cvars | ' + document.location.host;
+    useTitle((game ? game.title + ' | ' : '') + 'Cvars');
 
-        const cvars = await Client.get(pathname);
-        for (let cvar of cvars) {
-            cvar.getFlags = function () {
-                return this._flags ? this._flags : this._flags = FCVAR.list(this.flags);
-            };
-            cvar.getOs = function () {
-                return this._os ? this._os : this._os = OS[this.system];
-            };
-        }
-        this.setState({ cvars });
-    }
+    const [cvars, setCvars] = React.useState([]);
+    const [filter, setFilter] = React.useState(() => (cvar) => (defaultSearch !== null ? cvar.name.includes(defaultSearch) : true));
 
-    updateFilter = (filter) => this.setState({ filter });
+    React.useEffect(() => {
+        Api.get(pathname)
+            .then((cvars) => {
+                for (let cvar of cvars) {
+                    cvar.getFlags = function() {
+                        return this._flags ? this._flags : (this._flags = FCVAR.list(this.flags));
+                    };
+                    cvar.getOs = function() {
+                        return this._os ? this._os : (this._os = OS[this.system]);
+                    };
+                }
 
-    jumpToTop = () => {
+                if (isMounted.current) {
+                    setCvars(cvars);
+                }
+            })
+            .catch((err) => console.error(err));
+    }, []);
+
+    const updateFilter = (filter) => isMounted.current && setFilter(() => filter);
+
+    const jumpToTop = () => {
         const smoothScroll = () => {
             const y = document.documentElement.scrollTop;
             if (y > 0) {
                 window.requestAnimationFrame(smoothScroll);
-                window.scrollTo(0, y - (y / 5));
+                window.scrollTo(0, y - y / 5);
             }
         };
         smoothScroll();
     };
 
-    render() {
-        const { classes, hasNewCheckbox } = this.props;
-        const { cvars, filter } = this.state;
+    const classes = useStyles();
 
-        return (
-            <>
-                <Grid container>
-                    <Grid item xs={false} sm={false} md={false} lg={1} xl={2} />
-                    <Grid item xs={12} sm={12} md={12} lg={10} xl={8} >
-                        <Paper className={classes.filterBox}>
-                            <CvarsFilter searchFilter={this.updateFilter} newCheckbox={hasNewCheckbox} />
-                        </Paper>
-                        <Paper>
-                            {cvars.length === 0 && <LinearProgress />}
-                            <CvarsTable data={cvars.filter(filter)} />
-                        </Paper>
-                    </Grid>
+    return (
+        <>
+            <Grid container>
+                <Grid item xs={false} sm={false} md={false} lg={1} xl={2} />
+                <Grid item xs={12} sm={12} md={12} lg={10} xl={8}>
+                    <Paper className={classes.filterBox}>
+                        <CvarsFilter defaultSearchTerm={query.get('filter')} searchFilter={updateFilter} newCheckbox={hasNewCheckbox} />
+                    </Paper>
+                    <Paper>
+                        {cvars.length === 0 && <LinearProgress />}
+                        <CvarsTable data={cvars.filter(filter)} />
+                    </Paper>
                 </Grid>
-                <Zoom in={cvars.length !== 0} timeout={1000}>
-                    <Fab title="Jump to top" color="primary" className={classes.fab} onClick={this.jumpToTop}>
-                        <KeyboardArrowUpIcon />
-                    </Fab>
-                </Zoom>
-            </>
-        );
-    }
-}
+            </Grid>
+            <Zoom in={cvars.length !== 0} timeout={1000}>
+                <Fab title="Jump to top" color="primary" className={classes.fab} onClick={jumpToTop}>
+                    <KeyboardArrowUpIcon />
+                </Fab>
+            </Zoom>
+        </>
+    );
+};
 
-export default withContext(withStyles(styles)(CvarsView));
+export default CvarsView;

@@ -1,32 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import GameGrid from '../components/GameGrid';
-import { withContext } from '../withContext';
+import { useTitle } from '../Hooks';
+import AppState from '../AppState';
 
-class MainView extends React.Component {
-    static propTypes = {
-        games: PropTypes.object.isRequired,
-    };
+const MainView = () => {
+    useTitle('Cvars');
 
-    componentDidMount() {
-        document.title = 'Cvars | ' + document.location.host;
-    }
+    const { state: { games } } = React.useContext(AppState);
 
-    render() {
-        const { games } = this.props;
+    return (
+        <Grid container>
+            <Grid item xs={false} sm={false} md={1} lg={2} xl={2} />
+            <Grid item xs={12} sm={12} md={10} lg={8} xl={8}>
+                <GameGrid games={games} />
+            </Grid>
+        </Grid>
+    );
+};
 
-        return (
-            <>
-                <Grid container>
-                    <Grid item xs={false} sm={false} md={1} lg={2} xl={2} />
-                    <Grid item xs={12} sm={12} md={10} lg={8} xl={8} >
-                        <GameGrid games={games} />
-                    </Grid>
-                </Grid>
-            </>
-        );
-    }
-}
-
-export default withContext(MainView);
+export default MainView;
