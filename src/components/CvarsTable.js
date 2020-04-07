@@ -41,8 +41,16 @@ const CvarsTableHead = ({ onRequestSort, order, orderBy }) => {
                             sortDirection={orderBy === row.id ? order : false}
                         >
                             {row.sortable === true && (
-                                <Tooltip title="Sort" placement={row.numeric ? 'bottom-end' : 'bottom-start'} enterDelay={300}>
-                                    <TableSortLabel active={orderBy === row.id} direction={order} onClick={createSortHandler(row.id)}>
+                                <Tooltip
+                                    title="Sort"
+                                    placement={row.numeric ? 'bottom-end' : 'bottom-start'}
+                                    enterDelay={300}
+                                >
+                                    <TableSortLabel
+                                        active={orderBy === row.id}
+                                        direction={order}
+                                        onClick={createSortHandler(row.id)}
+                                    >
                                         {row.label}
                                     </TableSortLabel>
                                 </Tooltip>
@@ -87,7 +95,7 @@ const CvarsTable = ({ data }) => {
     };
 
     const handleChangePage = (_, page) => {
-        setState((s) => ({...s, page }));
+        setState((s) => ({ ...s, page }));
     };
 
     const handleChangeRowsPerPage = (ev) => {
@@ -99,7 +107,12 @@ const CvarsTable = ({ data }) => {
     return (
         <div className={classes.root}>
             <Table>
-                <CvarsTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} rowCount={data.length} />
+                <CvarsTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                    rowCount={data.length}
+                />
                 <TableBody>
                     {stableSort(data, order, orderBy)
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

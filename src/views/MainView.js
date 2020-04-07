@@ -7,7 +7,9 @@ import AppState from '../AppState';
 const MainView = () => {
     useTitle('Cvars');
 
-    const { state: { games } } = React.useContext(AppState);
+    const {
+        state: { games },
+    } = React.useContext(AppState);
 
     return (
         <Grid container>

@@ -42,10 +42,7 @@ const qa = [
         'A: These commands are not registered by the ICvar interface and only exist hard-coded in ClientCommand functions of entities.',
     ],
     '',
-    [
-        'Q: How did you gather all that data?',
-        'A: Mostly used SourceAutoRecord\'s dumping features.',
-    ],
+    ['Q: How did you gather all that data?', "A: Mostly used SourceAutoRecord's dumping features."],
 ];
 
 const noWrap = { whiteSpace: 'nowrap' };
@@ -111,8 +108,9 @@ const AboutView = () => {
                         </Typography>
                         <br />
                         <Typography variant="body1">
-                            The largest console command database of various Source Engine games.
-                            We list hidden developer commands, expose OS specifics differences and highlight commands between similar engines.
+                            The largest console command database of various Source Engine games. We list hidden
+                            developer commands, expose OS specifics differences and highlight commands between similar
+                            engines.
                         </Typography>
 
                         <Padding />
@@ -184,7 +182,11 @@ const AboutView = () => {
                                                     </MinTableCell>
                                                     <MinTableCell align="left">
                                                         {commit.author ? (
-                                                            <Link color="inherit" rel="noopener" href={commit.author.html_url}>
+                                                            <Link
+                                                                color="inherit"
+                                                                rel="noopener"
+                                                                href={commit.author.html_url}
+                                                            >
                                                                 {commit.author.login}
                                                             </Link>
                                                         ) : (
@@ -196,7 +198,9 @@ const AboutView = () => {
                                                             <Link
                                                                 color="inherit"
                                                                 rel="noopener"
-                                                                href={'https://github.com/NeKzor/lp/commit/' + commit.sha}
+                                                                href={
+                                                                    'https://github.com/NeKzor/lp/commit/' + commit.sha
+                                                                }
                                                             >
                                                                 {commit.sha}
                                                             </Link>
@@ -216,7 +220,9 @@ const AboutView = () => {
                         <br />
                         <FormGroup row>
                             <FormControlLabel
-                                control={<Switch checked={darkMode.enabled} onChange={toggleDarkMode} color="primary" />}
+                                control={
+                                    <Switch checked={darkMode.enabled} onChange={toggleDarkMode} color="primary" />
+                                }
                                 label="Dark Mode"
                             />
                         </FormGroup>

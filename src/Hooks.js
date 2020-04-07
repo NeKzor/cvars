@@ -29,7 +29,7 @@ export const useScroll = () => {
         timeout.current = setTimeout(() => {
             setState({ x: window.scrollX, y: window.scrollY });
         }, 100);
-    }, [setState])
+    }, [setState]);
 
     React.useEffect(() => {
         window.addEventListener('scroll', onScroll);

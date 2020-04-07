@@ -70,7 +70,10 @@ const GameGrid = ({ games }) => {
                                     component={Link}
                                     to={route}
                                 >
-                                    <span className={classes.imageSrc} style={{ backgroundImage: `url(${games[route].image})` }} />
+                                    <span
+                                        className={classes.imageSrc}
+                                        style={{ backgroundImage: `url(${games[route].image})` }}
+                                    />
                                     <span className={classes.imageBackdrop} />
                                 </ButtonBase>
                             </Fade>

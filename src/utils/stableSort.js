@@ -5,10 +5,8 @@ export const stableSort = (array, order, orderBy) => {
         return 0;
     };
 
-    let cmp = (order === 'desc')
-        ? (a, b) => desc(a, b)
-        : (a, b) => -desc(a, b);
-    
+    let cmp = order === 'desc' ? (a, b) => desc(a, b) : (a, b) => -desc(a, b);
+
     let sort = (a, b) => {
         let order = cmp(a[0], b[0]);
         if (order !== 0) return order;
@@ -18,5 +16,5 @@ export const stableSort = (array, order, orderBy) => {
     return array
         .map((el, index) => [el, index])
         .sort(sort)
-        .map(el => el[0]);
+        .map((el) => el[0]);
 };

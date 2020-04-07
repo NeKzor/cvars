@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme) => ({
 const AppBarWithDrawer = () => {
     const { pathname } = useLocation();
 
-    const { state: { games } } = React.useContext(AppState);
+    const {
+        state: { games },
+    } = React.useContext(AppState);
     const game = games[pathname];
 
     const [open, setOpen] = React.useState(false);
@@ -46,7 +48,7 @@ const AppBarWithDrawer = () => {
     };
 
     const classes = useStyles();
-    
+
     const list = (
         <div className={classes.list}>
             <List>

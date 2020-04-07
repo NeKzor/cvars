@@ -91,7 +91,14 @@ const CvarsFilter = ({ defaultSearchTerm, newCheckbox, searchFilter }) => {
                     <FormGroup row>
                         <FormControlLabel
                             label="Name"
-                            control={<Checkbox checked={name} onChange={handleChecked('name')} value="name" color="primary" />}
+                            control={
+                                <Checkbox
+                                    checked={name}
+                                    onChange={handleChecked('name')}
+                                    value="name"
+                                    color="primary"
+                                />
+                            }
                         />
                         <FormControlLabel
                             label="Default"
@@ -105,22 +112,48 @@ const CvarsFilter = ({ defaultSearchTerm, newCheckbox, searchFilter }) => {
                             }
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={flags} onChange={handleChecked('flags')} value="flags" color="primary" />}
+                            control={
+                                <Checkbox
+                                    checked={flags}
+                                    onChange={handleChecked('flags')}
+                                    value="flags"
+                                    color="primary"
+                                />
+                            }
                             label="Flags"
                         />
                         <FormControlLabel
                             label="System"
-                            control={<Checkbox checked={system} onChange={handleChecked('system')} value="system" color="primary" />}
+                            control={
+                                <Checkbox
+                                    checked={system}
+                                    onChange={handleChecked('system')}
+                                    value="system"
+                                    color="primary"
+                                />
+                            }
                         />
                         <FormControlLabel
                             label="Help Text"
-                            control={<Checkbox checked={help} onChange={handleChecked('help')} value="help" color="primary" />}
+                            control={
+                                <Checkbox
+                                    checked={help}
+                                    onChange={handleChecked('help')}
+                                    value="help"
+                                    color="primary"
+                                />
+                            }
                         />
                         {newCheckbox && (
                             <FormControlLabel
                                 label="New"
                                 control={
-                                    <Checkbox checked={newOnly} onChange={handleChecked('newOnly')} value="newOnly" color="primary" />
+                                    <Checkbox
+                                        checked={newOnly}
+                                        onChange={handleChecked('newOnly')}
+                                        value="newOnly"
+                                        color="primary"
+                                    />
                                 }
                             />
                         )}

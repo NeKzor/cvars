@@ -26,7 +26,7 @@ export class Flags extends Enum {
         let value = 0;
         for (let item of items) {
             this[value] = item;
-            this[item.replace(/ /g, '')] = (value !== 0) ? 1 << value - 1 : 0;
+            this[item.replace(/ /g, '')] = value !== 0 ? 1 << (value - 1) : 0;
             ++value;
         }
         this.count = value;
@@ -35,12 +35,12 @@ export class Flags extends Enum {
         return Object.freeze(new Flags(...items));
     }
     all() {
-        return (1 << this.count - 1) - 1;
+        return (1 << (this.count - 1)) - 1;
     }
     list(value) {
         const list = Object.keys(this)
-            .filter(k => k !== 'count' && Number.isNaN(parseInt(k)))
-            .filter(key => (value & this[key]) !== 0);
+            .filter((k) => k !== 'count' && Number.isNaN(parseInt(k)))
+            .filter((key) => (value & this[key]) !== 0);
         return list.length !== 0 ? list : [this[0]];
     }
 }
@@ -80,8 +80,4 @@ export const FCVAR = Flags.create(
     'CLIENTCMD_CAN_EXECUTE',
 );
 
-export const OS = Enum.create(
-    'Windows',
-    'Linux',
-    'Both',
-);
+export const OS = Enum.create('Windows', 'Linux', 'Both');

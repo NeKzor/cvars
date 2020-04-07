@@ -35,16 +35,18 @@ const CvarsView = ({ hasNewCheckbox }) => {
     useTitle((game ? game.title + ' | ' : '') + 'Cvars');
 
     const [cvars, setCvars] = React.useState([]);
-    const [filter, setFilter] = React.useState(() => (cvar) => (defaultSearch !== null ? cvar.name.includes(defaultSearch) : true));
+    const [filter, setFilter] = React.useState(() => (cvar) =>
+        defaultSearch !== null ? cvar.name.includes(defaultSearch) : true,
+    );
 
     React.useEffect(() => {
         Api.get(pathname)
             .then((cvars) => {
                 for (let cvar of cvars) {
-                    cvar.getFlags = function() {
+                    cvar.getFlags = function () {
                         return this._flags ? this._flags : (this._flags = FCVAR.list(this.flags));
                     };
-                    cvar.getOs = function() {
+                    cvar.getOs = function () {
                         return this._os ? this._os : (this._os = OS[this.system]);
                     };
                 }
@@ -66,7 +68,11 @@ const CvarsView = ({ hasNewCheckbox }) => {
                 <Grid item xs={false} sm={false} md={false} lg={1} xl={2} />
                 <Grid item xs={12} sm={12} md={12} lg={10} xl={8}>
                     <Paper className={classes.filterBox}>
-                        <CvarsFilter defaultSearchTerm={query.get('filter')} searchFilter={updateFilter} newCheckbox={hasNewCheckbox} />
+                        <CvarsFilter
+                            defaultSearchTerm={query.get('filter')}
+                            searchFilter={updateFilter}
+                            newCheckbox={hasNewCheckbox}
+                        />
                     </Paper>
                     <Paper>
                         {cvars.length === 0 && <LinearProgress />}
