@@ -19,3 +19,25 @@ export const useTitle = (title) => {
         document.title = title + ' - ' + document.location.host;
     }, [title]);
 };
+
+export const useScroll = () => {
+    const timeout = React.useRef(undefined);
+    const [state, setState] = React.useState({ x: 0, y: 0 });
+
+    const onScroll = React.useCallback(() => {
+        clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
+            setState({ x: window.scrollX, y: window.scrollY });
+        }, 100);
+    }, [setState])
+
+    React.useEffect(() => {
+        window.addEventListener('scroll', onScroll);
+        return () => {
+            clearTimeout(timeout.current);
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, [onScroll]);
+
+    return state;
+};

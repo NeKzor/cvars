@@ -1,14 +1,12 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import Fab from '@material-ui/core/Fab';
-import Zoom from '@material-ui/core/Zoom';
 import Grid from '@material-ui/core/Grid';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import CvarsTable from '../components/CvarsTable';
 import CvarsFilter from '../components/CvarsFilter';
+import FloatingActionButton from '../components/FloatingActionButton';
 import Api from '../Api';
 import { FCVAR, OS } from '../Types';
 import { useIsMounted, useTitle } from '../Hooks';
@@ -19,17 +17,6 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 20,
         padding: 10,
         marginBottom: theme.spacing(3),
-    },
-    fab: {
-        margin: 0,
-        top: 'auto',
-        right: 20,
-        bottom: 75,
-        [theme.breakpoints.up('lg')]: {
-            bottom: 20,
-        },
-        left: 'auto',
-        position: 'fixed',
     },
 }));
 
@@ -71,17 +58,6 @@ const CvarsView = ({ hasNewCheckbox }) => {
 
     const updateFilter = (filter) => isMounted.current && setFilter(() => filter);
 
-    const jumpToTop = () => {
-        const smoothScroll = () => {
-            const y = document.documentElement.scrollTop;
-            if (y > 0) {
-                window.requestAnimationFrame(smoothScroll);
-                window.scrollTo(0, y - y / 5);
-            }
-        };
-        smoothScroll();
-    };
-
     const classes = useStyles();
 
     return (
@@ -98,11 +74,7 @@ const CvarsView = ({ hasNewCheckbox }) => {
                     </Paper>
                 </Grid>
             </Grid>
-            <Zoom in={cvars.length !== 0} timeout={1000}>
-                <Fab title="Jump to top" color="primary" className={classes.fab} onClick={jumpToTop}>
-                    <KeyboardArrowUpIcon />
-                </Fab>
-            </Zoom>
+            <FloatingActionButton />
         </>
     );
 };
