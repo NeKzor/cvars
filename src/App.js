@@ -70,6 +70,8 @@ const App = () => {
                             <Redirect from="/css"  to="/counter-strike-source" />
                             <Redirect from="/hls"  to="/half-life-source" />
                             <Redirect from="/tf2"  to="/team-fortress-2" />
+                            <Redirect from="/d2"   to="/dota-2" />
+                            <Redirect from="/lab"  to="/the-lab" />
                             <Route exact path="/"                                   component={MainView} />
                             <Route exact path="/half-life-2"           key="hl2"    component={CvarsView} />
                             <Route exact path="/portal"                key="p1"     component={CvarsView} />
@@ -84,6 +86,8 @@ const App = () => {
                             <Route exact path="/counter-strike-source" key="css"    component={CvarsView} />
                             <Route exact path="/half-life-source"      key="hls"    component={CvarsView} />
                             <Route exact path="/team-fortress-2"       key="tf2"    component={CvarsView} />
+                            <Route exact path="/dota-2"                key="d2"     component={CvarsView} />
+                            <Route exact path="/the-lab"               key="lab"    component={CvarsView} />
                             <Route exact path="/about"                 key="about"  component={AboutView} />
                             <Route component={PageNotFoundView} />
                         </Switch>

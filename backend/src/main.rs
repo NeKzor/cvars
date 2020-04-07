@@ -8,7 +8,7 @@ use serde_repr::Serialize_repr;
 const API: &str = "../api-new/";
 const DATA: &str = "../data/";
 
-const MAP: [(&str, &str); 13] = [
+const MAP: [(&str, &str); 15] = [
     ("half-life-2",           ""),
     ("portal",                ""),
     ("portal-2",              ""),
@@ -22,6 +22,8 @@ const MAP: [(&str, &str); 13] = [
     ("counter-strike-source", ""),
     ("half-life-source",      ""),
     ("team-fortress-2",       ""),
+    ("dota-2",                ""),
+    ("the-lab",               ""),
 ];
 
 #[derive(Serialize_repr, Clone)]
