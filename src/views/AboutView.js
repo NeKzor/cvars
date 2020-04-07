@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 const qa = [
     [
         'Q: What are "New" commands?',
-        'A: Commands that have been added in an updated engine version. This only applies for games that derive from other games e.g. INFRA is based on Portal 2 engine.',
+        'A: Commands that have been added in an updated engine version. This only applies for games that derive from ' +
+            'other games e.g. INFRA is based on Portal 2 engine.',
     ],
     '',
     [
@@ -39,10 +40,11 @@ const qa = [
     '',
     [
         'Q: What about commands like restart_level or impulse?',
-        'A: These commands are not registered by the ICvar interface and only exist hard-coded in ClientCommand functions of entities.',
+        'A: These commands are not registered by the ICvar interface and only exist hard-coded in ClientCommand ' +
+            'functions of entities.',
     ],
     '',
-    ['Q: How did you gather all that data?', "A: Mostly used SourceAutoRecord's dumping features."],
+    ['Q: How did you gather all that data?', 'A: Mostly used dumping features from SourceAutoRecord.'],
 ];
 
 const noWrap = { whiteSpace: 'nowrap' };
