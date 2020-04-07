@@ -75,7 +75,7 @@ const CvarsFilter = ({ defaultSearchTerm, newCheckbox, searchFilter }) => {
     return (
         <Grid container>
             <Grid item xs={12} sm={12} md={4} lg={5} xl={6}>
-                <FormGroup row style={{ paddingTop: '15px', paddingRight: '10px' }}>
+                <FormGroup row style={{ paddingTop: '10px', paddingRight: '10px' }}>
                     <Input
                         title="Separate multiple search terms with spaces in between."
                         placeholder="Search"
