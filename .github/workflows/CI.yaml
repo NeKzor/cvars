@@ -4,7 +4,7 @@ on:
   push:
     paths:
     - 'module/src/**'
-    - 'module/cargo.toml'
+    - 'module/Cargo.toml'
 
 jobs:
   gh-pages:
