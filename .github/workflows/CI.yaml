@@ -30,7 +30,7 @@ jobs:
     - name: Build
       run: |
         cd module
-        cargo build --lib --release --target ${{ matrix.target }} --features ${{ matrix.engine }}
+        cargo build --lib --release --target ${{ matrix.target }} --features ${{ matrix.engine }} --no-default-features
     - name: Create Artifact
       uses: actions/upload-artifact@v2-preview
       with:
