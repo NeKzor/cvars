@@ -2,6 +2,7 @@
 api/
 api-new/
 data/
+bin/
 
 target/
 Cargo.lock

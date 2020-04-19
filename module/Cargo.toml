@@ -1,0 +1,23 @@
+[package]
+name = "cvars"
+version = "1.0.0"
+authors = ["NeKz <nekzor@users.noreply.github.com>"]
+edition = "2018"
+
+[lib]
+name = "cvars"
+crate-type = ["dylib"]
+bench = false
+path = "src/main.rs"
+
+[features]
+default = ["portal2"]
+hl2 = []
+portal2 = []
+dota2 = []
+vr = []
+
+[dependencies]
+libc = "0.2"
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3.8", features = ["libloaderapi"] }

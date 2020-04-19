@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    paths:
+    - 'module/src/**'
+    - 'module/cargo.toml'
+
+jobs:
+  gh-pages:
+    name: Module
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        include:
+          - engine: hl2
+            target: i686-pc-windows-msvc
+          - engine: portal2
+            target: i686-pc-windows-msvc
+          - engine: dota2
+            target: i686-pc-windows-msvc
+          - engine: vr
+            target: x86_64-pc-windows-msvc
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Rustup Configuration
+      run: rustup target add ${{ matrix.target }}
+    - name: Build
+      run: cargo build --lib --release --target ${{ matrix.target }} --features ${{ matrix.engine }}
+    - name: Create Artifact
+      uses: actions/upload-artifact@v2-preview
+      with:
+        name: cvars-${{ matrix.engine }}.dll
+        path: target/${{ matrix.target }}/release/cvars.dll
