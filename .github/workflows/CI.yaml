@@ -35,4 +35,4 @@ jobs:
       uses: actions/upload-artifact@v2-preview
       with:
         name: cvars-${{ matrix.engine }}.dll
-        path: target/${{ matrix.target }}/release/cvars.dll
+        path: module/target/${{ matrix.target }}/release/cvars.dll
