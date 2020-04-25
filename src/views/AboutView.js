@@ -81,7 +81,7 @@ const AboutView = () => {
                             setGitHub(
                                 branches.map((branch) => ({
                                     sha: branch.sha,
-                                    author: branch.author,
+                                    author: branch.author ? branch.author : branch.commit.author,
                                     message: branch.commit.message,
                                     date: branch.commit.author.date,
                                 })),
@@ -183,7 +183,7 @@ const AboutView = () => {
                                                         </Tooltip>
                                                     </MinTableCell>
                                                     <MinTableCell align="left">
-                                                        {commit.author ? (
+                                                        {commit.author.html_url ? (
                                                             <Link
                                                                 color="inherit"
                                                                 rel="noopener"
@@ -192,7 +192,7 @@ const AboutView = () => {
                                                                 {commit.author.login}
                                                             </Link>
                                                         ) : (
-                                                            'n/a'
+                                                            commit.author.name || 'n/a'
                                                         )}
                                                     </MinTableCell>
                                                     <MinTableCell align="left" style={noWrap}>
