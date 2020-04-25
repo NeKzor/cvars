@@ -44,20 +44,19 @@ impl Module for Console {
 
     fn init(&mut self) -> Result<(), &'static str> {
         let handle = get_module_handle(self.name());
-        if handle != 0 {
-            unsafe {
-                self.msg = Some(std::mem::transmute::<_, Msg>(get_symbol_address(
-                    handle, "Msg",
-                )));
-                self.warning = Some(std::mem::transmute::<_, Warning>(get_symbol_address(
-                    handle, "Warning",
-                )));
-            }
 
-            Ok(())
-        } else {
-            Err("unable to get handle")
+        unsafe {
+            self.msg = Some(std::mem::transmute::<_, Msg>(get_symbol_address(
+                handle, "Msg",
+            )));
+            self.warning = Some(std::mem::transmute::<_, Warning>(get_symbol_address(
+                handle, "Warning",
+            )));
         }
+
+        close_module_handle(handle);
+
+        Ok(())
     }
 
     fn shutdown(&self) -> Result<(), &'static str> {
@@ -83,6 +82,8 @@ impl Module for Tier1 {
     fn init(&mut self) -> Result<(), &'static str> {
         let handle = get_module_handle(self.name());
         let factory = get_symbol_address(handle, "CreateInterface");
+
+        close_module_handle(handle);
 
         let create_interface = unsafe { std::mem::transmute::<_, CreateInterfaceFn>(factory) };
         let icvar = create_interface(cstring!("VEngineCvar007"), 0 as *mut libc::c_int);

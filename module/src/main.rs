@@ -1,6 +1,9 @@
+extern crate ctor;
 extern crate libc;
 #[cfg(windows)]
 extern crate winapi;
+
+use ctor::*;
 
 #[macro_use]
 mod macros;
@@ -98,7 +101,7 @@ unsafe fn init() -> Result<(), &'static str> {
 }
 
 #[no_mangle]
-#[cfg(windows)]
+#[cfg(target_os = "windows")]
 #[export_name = "DllMain"]
 pub unsafe extern "stdcall" fn dll_main(
     _hinst_dll: winapi::shared::minwindef::HINSTANCE,
@@ -113,4 +116,10 @@ pub unsafe extern "stdcall" fn dll_main(
     }
 
     winapi::shared::minwindef::FALSE
+}
+
+#[cfg(target_os = "linux")]
+#[ctor]
+unsafe fn ctor() {
+    init().unwrap();
 }

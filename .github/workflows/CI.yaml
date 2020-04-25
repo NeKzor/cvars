@@ -7,8 +7,8 @@ on:
     - 'module/Cargo.toml'
 
 jobs:
-  gh-pages:
-    name: Module
+  module-win:
+    name: Module Build (Windows)
     runs-on: windows-2019
     strategy:
       matrix:
@@ -34,5 +34,34 @@ jobs:
     - name: Create Artifact
       uses: actions/upload-artifact@v2-preview
       with:
-        name: cvars-${{ matrix.engine }}.dll
+        name: cvars-windows-${{ matrix.engine }}
         path: module/target/${{ matrix.target }}/release/cvars.dll
+  module-lin:
+    name: Module Build (Linux)
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        include:
+          - engine: hl2
+            target: i686-unknown-linux-gnu
+          - engine: portal2
+            target: i686-unknown-linux-gnu
+          - engine: dota2
+            target: i686-unknown-linux-gnu
+          - engine: vr
+            target: x86_64-unknown-linux-gnu
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Rustup Configuration
+      run: rustup target add ${{ matrix.target }}
+    - name: Build
+      run: |
+        cd module
+        cargo build --lib --release --target ${{ matrix.target }} --features ${{ matrix.engine }} --no-default-features
+    - name: Create Artifact
+      uses: actions/upload-artifact@v2-preview
+      with:
+        name: cvars-linux-${{ matrix.engine }}
+        path: module/target/${{ matrix.target }}/release/libcvars.so
