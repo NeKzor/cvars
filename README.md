@@ -1,5 +1,5 @@
-![CI](https://github.com/NeKzor/cvars/workflows/CI/badge.svg?branch=master)
-![CD](https://github.com/NeKzor/cvars/workflows/CD/badge.svg?branch=master)
+[![CI](https://github.com/NeKzor/cvars/workflows/CI/badge.svg?branch=master)](https://github.com/NeKzor/cvars/actions?query=branch%3Amaster+workflow%3ACI)
+[![CD](https://github.com/NeKzor/cvars/workflows/CD/badge.svg?branch=master)](https://github.com/NeKzor/cvars/actions?query=branch%3Amaster+workflow%3ACD)
 
 # Cvars Database
 

@@ -55,7 +55,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Rustup Configuration
-      run: rustup target add ${{ matrix.target }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install gcc-multilib
+        rustup target add ${{ matrix.target }}
     - name: Build
       run: |
         cd module
