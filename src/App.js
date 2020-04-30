@@ -72,6 +72,7 @@ const App = () => {
                             <Redirect from="/tf2" to="/team-fortress-2" />
                             <Redirect from="/d2" to="/dota-2" />
                             <Redirect from="/lab" to="/the-lab" />
+                            <Redirect from="/l4d2" to="/left-4-dead-2" />
                             <Route exact path="/" component={MainView} />
                             <Route exact path="/half-life-2" key="hl2" component={CvarsView} />
                             <Route exact path="/portal" key="p1" component={CvarsView} />
@@ -88,6 +89,7 @@ const App = () => {
                             <Route exact path="/team-fortress-2" key="tf2" component={CvarsView} />
                             <Route exact path="/dota-2" key="d2" component={CvarsView} />
                             <Route exact path="/the-lab" key="lab" component={CvarsView} />
+                            <Route exact path="/left-4-dead-2" key="l4d2" component={CvarsView} />
                             <Route exact path="/about" key="about" component={AboutView} />
                             <Route component={PageNotFoundView} />
                         </Switch>

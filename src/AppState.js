@@ -37,6 +37,7 @@ const inititalState = {
         ...SourceGame('Alien Swarm', '630'),
         ...SourceGame('Dota 2', '570'),
         ...SourceGame('The Lab', '450390'),
+        ...SourceGame('Left 4 Dead 2', '550'),
     },
     darkMode: new DarkMode(),
 };
