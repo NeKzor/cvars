@@ -6,8 +6,8 @@ edition = "2018"
 
 [lib]
 crate-type = ["dylib"]
-bench = false
 path = "src/main.rs"
+bench = false
 
 [features]
 default = ["portal2"]
