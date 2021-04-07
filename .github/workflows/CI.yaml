@@ -5,6 +5,8 @@ on:
     paths:
     - 'module/src/**'
     - 'module/Cargo.toml'
+  schedule:
+    - cron: '0 0 1 * *'
 
 jobs:
   module-win:
