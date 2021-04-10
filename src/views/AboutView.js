@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import Fade from '@material-ui/core/Fade';
-import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
@@ -19,6 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTitle, useIsMounted } from '../Hooks';
 import AppState from '../AppState';
+import ViewContent from './ViewContent';
 
 const useStyles = makeStyles((theme) => ({
     aboutBox: {
@@ -44,7 +44,10 @@ const qa = [
             'functions of entities.',
     ],
     '',
-    ['Q: How did you gather all that data?', 'A: Mostly used dumping features from SourceAutoRecord.'],
+    [
+        'Q: How did you gather all that data?',
+        'A: A generic and injectable dumping module has been written, inspired by SourceAutoRecord.',
+    ],
 ];
 
 const noWrap = { whiteSpace: 'nowrap' };
@@ -100,146 +103,138 @@ const AboutView = () => {
     const classes = useStyles();
 
     return (
-        <Grid container>
-            <Grid item xs={false} sm={false} md={2} lg={3} xl={3} />
-            <Grid item xs={12} sm={12} md={8} lg={6} xl={6}>
-                <Fade in={true} timeout={500}>
-                    <Paper className={classes.aboutBox}>
-                        <Typography component="h2" variant="h5">
-                            Source Engine Console Commands & Variables
-                        </Typography>
-                        <br />
-                        <Typography variant="body1">
-                            The largest console command database of various Source Engine games. We list hidden
-                            developer commands, expose OS specifics differences and highlight commands between similar
-                            engines.
-                        </Typography>
+        <ViewContent>
+            <Fade in={true} timeout={500}>
+                <Paper className={classes.aboutBox}>
+                    <Typography component="h2" variant="h5">
+                        Source Engine Console Commands & Variables
+                    </Typography>
+                    <br />
+                    <Typography variant="body1">
+                        The largest console command database of various Source Engine games. We list hidden developer
+                        commands, expose OS specifics differences and highlight commands between similar engines.
+                    </Typography>
 
-                        <Padding />
+                    <Padding />
 
-                        <Typography component="h2" variant="h5">
-                            Q/A
-                        </Typography>
-                        <br />
-                        {qa.map((text, idx) => (
-                            <ListItem key={idx}>
-                                <Typography variant="body1">
-                                    {Array.isArray(text)
-                                        ? text.map((item, idx) => (
-                                              <React.Fragment key={idx}>
-                                                  {item}
-                                                  <br />
-                                              </React.Fragment>
-                                          ))
-                                        : text}
-                                </Typography>
-                            </ListItem>
-                        ))}
+                    <Typography component="h2" variant="h5">
+                        Q/A
+                    </Typography>
+                    <br />
+                    {qa.map((text, idx) => (
+                        <ListItem key={idx}>
+                            <Typography variant="body1">
+                                {Array.isArray(text)
+                                    ? text.map((item, idx) => (
+                                          <React.Fragment key={idx}>
+                                              {item}
+                                              <br />
+                                          </React.Fragment>
+                                      ))
+                                    : text}
+                            </Typography>
+                        </ListItem>
+                    ))}
 
-                        <Padding />
+                    <Padding />
 
-                        <Typography variant="h5">Last Update</Typography>
-                        <br />
-                        {gitHub === undefined ? (
-                            <Typography variant="body1">Unable to fetch status from GitHub.</Typography>
-                        ) : gitHub.length === 0 ? (
-                            <CircularProgress className={classes.progress} />
-                        ) : (
-                            <div style={{ overflowX: 'auto' }}>
-                                <Table size="small">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell padding="default">
-                                                <Typography variant="body1">Branch</Typography>
-                                            </TableCell>
-                                            <TableCell padding="default">
-                                                <Typography variant="body1">Date</Typography>
-                                            </TableCell>
-                                            <TableCell padding="default">
-                                                <Typography variant="body1">Author</Typography>
-                                            </TableCell>
-                                            <TableCell padding="default">
-                                                <Typography variant="body1">Commit</Typography>
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {gitHub.map((commit, idx) => {
-                                            const branch = branches[idx];
-                                            return (
-                                                <TableRow tabIndex={-1} key={idx} style={noWrap}>
-                                                    <MinTableCell align="left">
+                    <Typography variant="h5">Last Update</Typography>
+                    <br />
+                    {gitHub === undefined ? (
+                        <Typography variant="body1">Unable to fetch status from GitHub.</Typography>
+                    ) : gitHub.length === 0 ? (
+                        <CircularProgress className={classes.progress} />
+                    ) : (
+                        <div style={{ overflowX: 'auto' }}>
+                            <Table size="small">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell padding="default">
+                                            <Typography variant="body1">Branch</Typography>
+                                        </TableCell>
+                                        <TableCell padding="default">
+                                            <Typography variant="body1">Date</Typography>
+                                        </TableCell>
+                                        <TableCell padding="default">
+                                            <Typography variant="body1">Author</Typography>
+                                        </TableCell>
+                                        <TableCell padding="default">
+                                            <Typography variant="body1">Commit</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {gitHub.map((commit, idx) => {
+                                        const branch = branches[idx];
+                                        return (
+                                            <TableRow tabIndex={-1} key={idx} style={noWrap}>
+                                                <MinTableCell align="left">
+                                                    <Link
+                                                        color="inherit"
+                                                        rel="noopener"
+                                                        href={'https://github.com/NeKzor/cvars/tree/' + branch}
+                                                    >
+                                                        {branch}
+                                                    </Link>
+                                                </MinTableCell>
+                                                <MinTableCell align="left" style={noWrap}>
+                                                    <Tooltip title={moment(commit.date).toString()}>
+                                                        <span>{moment(commit.date).from()}</span>
+                                                    </Tooltip>
+                                                </MinTableCell>
+                                                <MinTableCell align="left">
+                                                    {commit.author ? (
                                                         <Link
                                                             color="inherit"
                                                             rel="noopener"
-                                                            href={'https://github.com/NeKzor/cvars/tree/' + branch}
+                                                            href={commit.author.html_url}
                                                         >
-                                                            {branch}
+                                                            {commit.author.login}
                                                         </Link>
-                                                    </MinTableCell>
-                                                    <MinTableCell align="left" style={noWrap}>
-                                                        <Tooltip title={moment(commit.date).toString()}>
-                                                            <span>{moment(commit.date).from()}</span>
-                                                        </Tooltip>
-                                                    </MinTableCell>
-                                                    <MinTableCell align="left">
-                                                        {commit.author.html_url ? (
-                                                            <Link
-                                                                color="inherit"
-                                                                rel="noopener"
-                                                                href={commit.author.html_url}
-                                                            >
-                                                                {commit.author.login}
-                                                            </Link>
-                                                        ) : (
-                                                            commit.author.name || 'n/a'
-                                                        )}
-                                                    </MinTableCell>
-                                                    <MinTableCell align="left" style={noWrap}>
-                                                        <Tooltip title={commit.message}>
-                                                            <Link
-                                                                color="inherit"
-                                                                rel="noopener"
-                                                                href={
-                                                                    'https://github.com/NeKzor/lp/commit/' + commit.sha
-                                                                }
-                                                            >
-                                                                {commit.sha}
-                                                            </Link>
-                                                        </Tooltip>
-                                                    </MinTableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                    </TableBody>
-                                </Table>
-                            </div>
-                        )}
+                                                    ) : (
+                                                        'n/a'
+                                                    )}
+                                                </MinTableCell>
+                                                <MinTableCell align="left" style={noWrap}>
+                                                    <Tooltip title={commit.message}>
+                                                        <Link
+                                                            color="inherit"
+                                                            rel="noopener"
+                                                            href={'https://github.com/NeKzor/lp/commit/' + commit.sha}
+                                                        >
+                                                            {commit.sha}
+                                                        </Link>
+                                                    </Tooltip>
+                                                </MinTableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    )}
 
-                        <Padding />
+                    <Padding />
 
-                        <Typography variant="h5">Theme Settings</Typography>
-                        <br />
-                        <FormGroup row>
-                            <FormControlLabel
-                                control={
-                                    <Switch checked={darkMode.enabled} onChange={toggleDarkMode} color="primary" />
-                                }
-                                label="Dark Mode"
-                            />
-                        </FormGroup>
+                    <Typography variant="h5">Theme Settings</Typography>
+                    <br />
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={<Switch checked={darkMode.enabled} onChange={toggleDarkMode} color="primary" />}
+                            label="Dark Mode"
+                        />
+                    </FormGroup>
 
-                        <Padding />
+                    <Padding />
 
-                        <Tooltip title="Source Code">
-                            <Link rel="noopener" href="https://github.com/NeKzor/cvars">
-                                github.com/NeKzor/cvars
-                            </Link>
-                        </Tooltip>
-                    </Paper>
-                </Fade>
-            </Grid>
-        </Grid>
+                    <Tooltip title="Source Code">
+                        <Link rel="noopener" href="https://github.com/NeKzor/cvars">
+                            github.com/NeKzor/cvars
+                        </Link>
+                    </Tooltip>
+                </Paper>
+            </Fade>
+        </ViewContent>
     );
 };
 

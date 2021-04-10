@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +10,7 @@ import Api from '../Api';
 import { FCVAR, OS } from '../Types';
 import { useIsMounted, useTitle } from '../Hooks';
 import AppState from '../AppState';
+import ViewContent from './ViewContent';
 
 const useStyles = makeStyles((theme) => ({
     filterBox: {
@@ -96,22 +96,19 @@ const CvarsView = ({ hasNewCheckbox }) => {
 
     return (
         <>
-            <Grid container>
-                <Grid item xs={false} sm={false} md={false} lg={1} xl={2} />
-                <Grid item xs={12} sm={12} md={12} lg={10} xl={8}>
-                    <Paper className={classes.filterBox}>
-                        <CvarsFilter
-                            defaultSearchTerm={query.get('filter')}
-                            searchFilter={updateFilter}
-                            newCheckbox={hasNewCheckbox}
-                        />
-                    </Paper>
-                    <Paper>
-                        {cvars.length === 0 && <LinearProgress />}
-                        <CvarsTable data={cvars.filter(filter)} />
-                    </Paper>
-                </Grid>
-            </Grid>
+            <ViewContent>
+                <Paper className={classes.filterBox}>
+                    <CvarsFilter
+                        defaultSearchTerm={query.get('filter')}
+                        searchFilter={updateFilter}
+                        newCheckbox={hasNewCheckbox}
+                    />
+                </Paper>
+                <Paper>
+                    {cvars.length === 0 && <LinearProgress />}
+                    <CvarsTable data={cvars.filter(filter)} />
+                </Paper>
+            </ViewContent>
             <FloatingActionButton />
         </>
     );
