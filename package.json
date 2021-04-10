@@ -27,7 +27,8 @@
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
         "dev": "hs ./api --cors",
-        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.js'"
+        "prettier": "prettier --config ./prettier.config.js --write './src/**/*.js'",
+        "clone:api": "git clone --single-branch --branch api https://github.com/NeKzor/cvars api"
     },
     "browserslist": [
         ">0.2%",
