@@ -38,6 +38,7 @@ const inititalState = {
         ...SourceGame('Dota 2', '570'),
         ...SourceGame('The Lab', '450390'),
         ...SourceGame('Left 4 Dead 2', '550'),
+        ...SourceGame('Portal 2 Community Edition', '440000'),
     },
     darkMode: new DarkMode(),
 };
