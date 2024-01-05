@@ -1,3 +1,6 @@
+// Copyright (c) 2020, NeKz
+// SPDX-License-Identifier: MIT
+
 extern crate ctor;
 extern crate libc;
 #[cfg(windows)]

@@ -13,6 +13,7 @@ bench = false
 default = ["portal2"]
 hl2 = []
 portal2 = []
+portal2_ce = []
 dota2 = []
 vr = []
 

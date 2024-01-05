@@ -1,9 +1,17 @@
+// Copyright (c) 2020-2023, NeKz
+// SPDX-License-Identifier: MIT
+
 use crate::offsets;
 
 pub type CreateInterfaceFn = fn(*const libc::c_char, *mut libc::c_int) -> usize;
 
 #[repr(C)]
-#[cfg(any(feature = "hl2", feature = "portal2", feature = "vr"))]
+#[cfg(any(
+    feature = "hl2",
+    feature = "portal2",
+    feature = "portal2_ce",
+    feature = "vr"
+))]
 pub struct ConCommandBase {
     pub base_vtable: *mut libc::c_void,   // 0
     pub next: *mut ConCommandBase,        // 4

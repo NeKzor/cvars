@@ -1,3 +1,6 @@
+// Copyright (c) 2020, NeKz
+// SPDX-License-Identifier: MIT
+
 #[cfg(target_os = "linux")]
 use libc;
 #[cfg(target_os = "windows")]
