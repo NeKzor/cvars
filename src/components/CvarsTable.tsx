@@ -227,29 +227,12 @@ const CvarsTable = ({ data }: any) => {
                 </TableBody>
                 <TableFooter>
                     <TableRow>
-                        {/* <TablePagination
+                        <TablePagination
                             rowsPerPageOptions={[10, 100, 500, 1000]}
-                            component="div"
                             count={data.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             labelDisplayedRows={() => ''}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                        >
-                        </TablePagination> */}
-                        <TablePagination
-                            rowsPerPageOptions={[10, 100, 500, 1000]}
-                            colSpan={3}
-                            count={rows.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {
-                                'aria-label': 'rows per page',
-                                },
-                                native: true,
-                            }}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
                             ActionsComponent={TablePaginationActions}
