@@ -16,7 +16,6 @@ import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { useTitle, useIsMounted } from '../Hooks';
-import AppState from '../AppState';
 import ViewContent from './ViewContent';
 
 const PREFIX = 'AboutView';
