@@ -11,13 +11,15 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import AppState from '../AppState';
 import Box from '@mui/material/Box';
-import { DarkMode, LightMode } from '@mui/icons-material';
 
 const PREFIX = 'AppBar';
 const classes = {
@@ -104,11 +106,23 @@ const AppBarWithDrawer = () => {
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             size="large"
+                            title="Toggle Theme"
                             aria-label="Toggle Light/Dark Theme"
                             color="inherit"
                             onClick={toggleDarkMode}
                         >
-                            {darkMode.enabled ? <LightMode /> : <DarkMode />}
+                            {darkMode.enabled ? <LightModeIcon /> : <DarkModeIcon />}
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            title="View source code on GitHub"
+                            aria-label="GitHub Repository"
+                            color="inherit"
+                            LinkComponent={Link}
+                            target="_blank"
+                            href="https://github.com/NeKzor/cvars"
+                        >
+                            <GitHubIcon />
                         </IconButton>
                     </Box>
                 </Toolbar>

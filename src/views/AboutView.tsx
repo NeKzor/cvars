@@ -205,14 +205,6 @@ const AboutView = () => {
                             </Table>
                         </div>
                     )}
-
-                    <Padding />
-
-                    <Tooltip title="Source Code">
-                        <Link rel="noopener" href="https://github.com/NeKzor/cvars">
-                            github.com/NeKzor/cvars
-                        </Link>
-                    </Tooltip>
                 </Root>
             </Fade>
         </ViewContent>
