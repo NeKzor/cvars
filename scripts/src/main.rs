@@ -17,8 +17,8 @@ const API: &str = "../api/";
 const DATA: &str = "../data/";
 
 #[rustfmt::skip]
-const MAP: [(&str, &str); 17] = [
-    ("half-life-2",                 ""),
+const MAP: [(&str, &str); 18] = [
+    ("half-life-2",                ""),
     ("portal",                     ""),
     ("portal-2",                   ""),
     ("the-beginners-guide",        "portal-2"),
@@ -35,6 +35,7 @@ const MAP: [(&str, &str); 17] = [
     ("the-lab",                    ""),
     ("left-4-dead-2",              ""),
     ("portal-2-community-edition", "portal-2"),
+    ("portal-revolution",          "portal-2-community-edition"),
 ];
 
 #[derive(Serialize_repr, Clone)]
@@ -142,7 +143,7 @@ fn main() {
         let mut export = source.clone();
 
         if !comp.is_empty() {
-            let reference = sources.iter().find(|x| x.1 == *comp).unwrap();
+            let reference = sources.iter().find(|x| x.0 == *comp).unwrap();
             mark_as_new(&mut export, &reference.2);
         }
 
