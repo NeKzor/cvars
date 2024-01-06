@@ -60,7 +60,7 @@ const noWrap = { whiteSpace: 'nowrap' };
 const MinTableCell = (props: any) => <TableCell size="small" {...props} />;
 const Padding = () => <div style={{ paddingTop: '50px' }} />;
 
-const branches = ['master', 'api'];
+const branches = ['main', 'api'];
 
 const AboutView = () => {
     const isMounted = useIsMounted();
