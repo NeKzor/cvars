@@ -1,4 +1,4 @@
-// Copyright (c) 2020-2023, NeKz
+// Copyright (c) 2020-2024, NeKz
 // SPDX-License-Identifier: MIT
 
 #[macro_export]

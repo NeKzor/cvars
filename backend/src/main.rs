@@ -1,30 +1,40 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
+// This does the following:
+// - Converts .txt aka .cvars to .json.
+// - Figures out unique commands between operating systems.
+// - Figures out new commands to previous engines.
+
 #![allow(dead_code)]
-use std::fs;
-use std::path;
-use std::io::Write;
 use serde::Serialize;
 use serde_repr::Serialize_repr;
+use std::fs;
+use std::io::Write;
+use std::path;
 
-const API: &str = "../api-new/";
+const API: &str = "../api/";
 const DATA: &str = "../data/";
 
-const MAP: [(&str, &str); 16] = [
-    ("half-life-2",           ""),
-    ("portal",                ""),
-    ("portal-2",              ""),
-    ("the-beginners-guide",   "portal-2"),
-    ("the-stanley-parable",   "portal-2"),
-    ("infra",                 "portal-2"),
-    ("global-offensive",      ""),
-    ("black-mesa",            "half-life-2"),
-    ("portal-2-sixense",      "portal-2"),
-    ("alien-swarm",           ""),
-    ("counter-strike-source", ""),
-    ("half-life-source",      ""),
-    ("team-fortress-2",       ""),
-    ("dota-2",                ""),
-    ("the-lab",               ""),
-    ("left-4-dead-2",         ""),
+#[rustfmt::skip]
+const MAP: [(&str, &str); 17] = [
+    ("half-life-2",                 ""),
+    ("portal",                     ""),
+    ("portal-2",                   ""),
+    ("the-beginners-guide",        "portal-2"),
+    ("the-stanley-parable",        "portal-2"),
+    ("infra",                      "portal-2"),
+    ("global-offensive",           ""),
+    ("black-mesa",                 "half-life-2"),
+    ("portal-2-sixense",           "portal-2"),
+    ("alien-swarm",                ""),
+    ("counter-strike-source",      ""),
+    ("half-life-source",           ""),
+    ("team-fortress-2",            ""),
+    ("dota-2",                     ""),
+    ("the-lab",                    ""),
+    ("left-4-dead-2",              ""),
+    ("portal-2-community-edition", "portal-2"),
 ];
 
 #[derive(Serialize_repr, Clone)]
@@ -45,9 +55,8 @@ struct Cvar {
     new: bool,
 }
 
-fn import_file(file : String, cvars : &mut Vec<Cvar>) {
-    let contents = fs::read_to_string(&file)
-        .expect("Failed to open file!");
+fn import_file(file: String, cvars: &mut Vec<Cvar>) {
+    let contents = fs::read_to_string(&file).expect("Failed to open file!");
 
     for cvar in contents.split("[end_of_cvar]") {
         let fields: Vec<&str> = cvar.split("[cvar_data]").collect();
@@ -65,10 +74,10 @@ fn import_file(file : String, cvars : &mut Vec<Cvar>) {
         });
     }
 
-    println!("imported {} cvars from {}", cvars.len(), file);    
+    println!("imported {} cvars from {}", cvars.len(), file);
 }
 
-fn merge_unique(a : &mut Vec<Cvar>, b : &mut Vec<Cvar>) {
+fn merge_unique(a: &mut Vec<Cvar>, b: &mut Vec<Cvar>) {
     for cvar in a.iter_mut() {
         if b.iter().any(|x| x.name == cvar.name) {
             cvar.system = OperatingSystem::All;
@@ -85,7 +94,7 @@ fn merge_unique(a : &mut Vec<Cvar>, b : &mut Vec<Cvar>) {
     }
 }
 
-fn mark_as_new(a : &mut Vec<Cvar>, b : &Vec<Cvar>) {
+fn mark_as_new(a: &mut Vec<Cvar>, b: &Vec<Cvar>) {
     for cvar in a.iter_mut() {
         if !b.iter().any(|x| x.name == cvar.name) {
             cvar.new = true;
@@ -93,7 +102,7 @@ fn mark_as_new(a : &mut Vec<Cvar>, b : &Vec<Cvar>) {
     }
 }
 
-fn export_file(name : String, cvars : &mut Vec<Cvar>) {
+fn export_file(name: String, cvars: &mut Vec<Cvar>) {
     cvars.sort_by(|a, b| a.name.cmp(&b.name));
 
     fs::File::create(name)
@@ -104,13 +113,13 @@ fn export_file(name : String, cvars : &mut Vec<Cvar>) {
 
 fn main() {
     if !path::Path::new(API).exists() {
-       fs::create_dir(API).expect("Cannot create api direcory");
+        fs::create_dir(API).expect("Cannot create api directory");
     }
 
     let mut sources = vec![];
 
     for (game, comp) in MAP.iter() {
-        let mut windows : Vec<Cvar> = vec![];
+        let mut windows: Vec<Cvar> = vec![];
 
         let win = format!("{}{}{}", DATA, game, "_windows.cvars");
         let lin = format!("{}{}{}", DATA, game, "_linux.cvars");

@@ -28,12 +28,7 @@ pub struct Color {
 
 impl Color {
     #[allow(unused)]
-    pub const fn new(
-        r: libc::c_char,
-        g: libc::c_char,
-        b: libc::c_char,
-        a: libc::c_char,
-    ) -> Self {
+    pub const fn new(r: libc::c_char, g: libc::c_char, b: libc::c_char, a: libc::c_char) -> Self {
         Self { r, g, b, a }
     }
 }
