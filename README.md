@@ -1,5 +1,5 @@
-[![CI](https://github.com/NeKzor/cvars/workflows/CI/badge.svg?branch=master)](https://github.com/NeKzor/cvars/actions?query=branch%3Amaster+workflow%3ACI)
-[![CD](https://github.com/NeKzor/cvars/workflows/CD/badge.svg?branch=master)](https://github.com/NeKzor/cvars/actions?query=branch%3Amaster+workflow%3ACD)
+[![CI](https://github.com/NeKzor/cvars/workflows/CI/badge.svg?branch=main)](https://github.com/NeKzor/cvars/actions?query=branch%3Amain+workflow%3ACI)
+[![CD](https://github.com/NeKzor/cvars/workflows/CD/badge.svg?branch=main)](https://github.com/NeKzor/cvars/actions?query=branch%3Amain+workflow%3ACD)
 
 # Cvars Database
 
@@ -7,7 +7,7 @@
 
 ## Dumping Format
 
-Dumping format is very simple. No dependencies or sanitisations are required:
+Dumping format is very simple. No dependencies or sanitizations are required:
 
 `field[cvar_data]field[cvar_data]field[cvar_data]field[end_of_cvar]...`
 
@@ -20,6 +20,13 @@ Dumping format is very simple. No dependencies or sanitisations are required:
 
 ## Dumper
 
-Generic dumping module which will be injected into target process. Can easily be done via `plugin_load`. Requires an injector for SourceEngine 2 games.
+Generic dumping module which will be injected into target process which can be done via `plugin_load` in most cases.
+SourceEngine 2 games and engines based on Strata Source require an injector.
 
-Latest builds can be downloaded [here](https://github.com/NeKzor/cvars/actions?query=branch%3Amaster+is%3Asuccess+workflow%3ACI) via GitHub artifacts (requires GitHub account).
+Latest builds can be downloaded [here] via GitHub artifacts (requires GitHub account).
+
+[here]: https://github.com/NeKzor/cvars/actions?query=branch%3Amain+is%3Asuccess+workflow%3ACI
+
+## License
+
+[MIT License](./LICENSE)
