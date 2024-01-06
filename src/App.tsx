@@ -110,6 +110,11 @@ const App = () => {
                                     key="p2ce"
                                     Component={CvarsViewWithCheckbox}
                                 />
+                                <Route
+                                    path="/portal-revolution"
+                                    key="revolution"
+                                    Component={CvarsViewWithCheckbox}
+                                />
                                 <Route path="/about" key="about" Component={AboutView} />
                                 <Route Component={PageNotFoundView} />
                             </Routes>

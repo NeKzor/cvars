@@ -44,6 +44,7 @@ export const initialState = {
         ...SourceGame('The Lab', '450390'),
         ...SourceGame('Left 4 Dead 2', '550'),
         ...SourceGame('Portal 2 Community Edition', '440000'),
+        ...SourceGame('Portal: Revolution', '601360'),
     },
     darkMode: new DarkMode(),
 };
