@@ -1,27 +1,32 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 import React from 'react';
 
 export const useIsMounted = () => {
     const ref = React.useRef(false);
     React.useEffect(() => {
         ref.current = true;
-        return () => (ref.current = false);
+        return () => {
+            ref.current = false;
+        };
     }, []);
     return ref;
 };
 
-export const useRenders = (debug) => {
+export const useRenders = (debug: string) => {
     const ref = React.useRef(0);
     console.log(debug + ' renders: ', ++ref.current);
 };
 
-export const useTitle = (title) => {
+export const useTitle = (title: string) => {
     React.useEffect(() => {
         document.title = title + ' - ' + document.location.host;
     }, [title]);
 };
 
 export const useScroll = () => {
-    const timeout = React.useRef(undefined);
+    const timeout = React.useRef<any>(undefined);
     const [state, setState] = React.useState({ x: 0, y: 0 });
 
     const onScroll = React.useCallback(() => {

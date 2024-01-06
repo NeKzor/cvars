@@ -1,8 +1,11 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 import React from 'react';
 import { useLocation } from 'react-router';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@mui/material/LinearProgress';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 import CvarsTable from '../components/CvarsTable';
 import CvarsFilter from '../components/CvarsFilter';
 import FloatingActionButton from '../components/FloatingActionButton';
@@ -12,15 +15,20 @@ import { useIsMounted, useTitle } from '../Hooks';
 import AppState from '../AppState';
 import ViewContent from './ViewContent';
 
-const useStyles = makeStyles((theme) => ({
-    filterBox: {
+const PREFIX = 'CvarsView';
+const classes = {
+    filterBox: `${PREFIX}-filterBox`,
+};
+const Root = styled('div')(({ theme }) => ({
+    [`& .${classes.filterBox}`]: {
         paddingLeft: 20,
-        padding: 10,
+        paddingTop: 8,
+        paddingBottom: 12,
         marginBottom: theme.spacing(3),
     },
 }));
 
-const searchQuery = (query, match) => {
+const searchQuery = (query: string | null, match: any) => {
     if (!query) return false;
 
     const isArray = Array.isArray(match);
@@ -40,7 +48,7 @@ const searchQuery = (query, match) => {
     return false;
 };
 
-const CvarsView = ({ hasNewCheckbox }) => {
+const CvarsView = ({ hasNewCheckbox }: any) => {
     const isMounted = useIsMounted();
 
     const { pathname, search } = useLocation();
@@ -59,7 +67,7 @@ const CvarsView = ({ hasNewCheckbox }) => {
     useTitle((game ? game.title + ' | ' : '') + 'Cvars');
 
     const [cvars, setCvars] = React.useState([]);
-    const [filter, setFilter] = React.useState(() => (cvar) => {
+    const [filter, setFilter] = React.useState(() => (cvar: any) => {
         if (!defaultName && !defaultDefault && !defaultFlags && !defaultSystem && !defaultHelpText) {
             return true;
         }
@@ -79,7 +87,7 @@ const CvarsView = ({ hasNewCheckbox }) => {
                         return this._flags ? this._flags : (this._flags = FCVAR.list(this.flags));
                     };
                     cvar.getOs = function () {
-                        return this._os ? this._os : (this._os = OS[this.system]);
+                        return this._os ? this._os : (this._os = (OS as any)[this.system]);
                     };
                 }
 
@@ -88,14 +96,15 @@ const CvarsView = ({ hasNewCheckbox }) => {
                 }
             })
             .catch((err) => console.error(err));
-    }, []);
+    }, [pathname, isMounted]);
 
-    const updateFilter = (filter) => isMounted.current && setFilter(() => filter);
-
-    const classes = useStyles();
+    const updateFilter = React.useCallback(
+        (filter: any) => isMounted.current && setFilter(() => filter),
+        [isMounted, setFilter],
+    );
 
     return (
-        <>
+        <Root>
             <ViewContent>
                 <Paper className={classes.filterBox}>
                     <CvarsFilter
@@ -110,7 +119,7 @@ const CvarsView = ({ hasNewCheckbox }) => {
                 </Paper>
             </ViewContent>
             <FloatingActionButton />
-        </>
+        </Root>
     );
 };
 

@@ -1,27 +1,33 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 import React from 'react';
-import moment from 'moment';
-import Fade from '@material-ui/core/Fade';
-import Link from '@material-ui/core/Link';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles } from '@material-ui/core/styles';
+import Fade from '@mui/material/Fade';
+import Link from '@mui/material/Link';
+import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 import { useTitle, useIsMounted } from '../Hooks';
 import AppState from '../AppState';
 import ViewContent from './ViewContent';
 
-const useStyles = makeStyles((theme) => ({
-    aboutBox: {
+const PREFIX = 'AboutView';
+const classes = {
+    aboutBox: `${PREFIX}-aboutBox`,
+};
+const Root = styled(Paper)(({ theme }) => ({
+    [`&.${classes.aboutBox}`]: {
         padding: theme.spacing(3),
     },
 }));
@@ -51,10 +57,10 @@ const qa = [
 ];
 
 const noWrap = { whiteSpace: 'nowrap' };
-const MinTableCell = (props) => <TableCell size="small" {...props} />;
+const MinTableCell = (props: any) => <TableCell size="small" {...props} />;
 const Padding = () => <div style={{ paddingTop: '50px' }} />;
 
-const branches = ['master', 'api', 'gh-pages'];
+const branches = ['master', 'api'];
 
 const AboutView = () => {
     const isMounted = useIsMounted();
@@ -66,10 +72,10 @@ const AboutView = () => {
         dispatch,
     } = React.useContext(AppState);
 
-    const [gitHub, setGitHub] = React.useState([]);
+    const [gitHub, setGitHub] = React.useState<any>([]);
 
     React.useEffect(() => {
-        const anyErrors = (err) => {
+        const anyErrors = (err: any) => {
             console.error(err);
             if (isMounted.current) {
                 setGitHub(undefined);
@@ -100,12 +106,10 @@ const AboutView = () => {
         dispatch({ action: 'toggleDarkMode' });
     };
 
-    const classes = useStyles();
-
     return (
         <ViewContent>
             <Fade in={true} timeout={500}>
-                <Paper className={classes.aboutBox}>
+                <Root className={classes.aboutBox}>
                     <Typography component="h2" variant="h5">
                         Source Engine Console Commands & Variables
                     </Typography>
@@ -126,11 +130,11 @@ const AboutView = () => {
                             <Typography variant="body1">
                                 {Array.isArray(text)
                                     ? text.map((item, idx) => (
-                                          <React.Fragment key={idx}>
-                                              {item}
-                                              <br />
-                                          </React.Fragment>
-                                      ))
+                                        <React.Fragment key={idx}>
+                                            {item}
+                                            <br />
+                                        </React.Fragment>
+                                    ))
                                     : text}
                             </Typography>
                         </ListItem>
@@ -143,28 +147,28 @@ const AboutView = () => {
                     {gitHub === undefined ? (
                         <Typography variant="body1">Unable to fetch status from GitHub.</Typography>
                     ) : gitHub.length === 0 ? (
-                        <CircularProgress className={classes.progress} />
+                        <CircularProgress />
                     ) : (
                         <div style={{ overflowX: 'auto' }}>
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell padding="default">
+                                        <TableCell padding="normal">
                                             <Typography variant="body1">Branch</Typography>
                                         </TableCell>
-                                        <TableCell padding="default">
+                                        <TableCell padding="normal">
                                             <Typography variant="body1">Date</Typography>
                                         </TableCell>
-                                        <TableCell padding="default">
+                                        <TableCell padding="normal">
                                             <Typography variant="body1">Author</Typography>
                                         </TableCell>
-                                        <TableCell padding="default">
+                                        <TableCell padding="normal">
                                             <Typography variant="body1">Commit</Typography>
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {gitHub.map((commit, idx) => {
+                                    {gitHub.map((commit: any, idx: number) => {
                                         const branch = branches[idx];
                                         return (
                                             <TableRow tabIndex={-1} key={idx} style={noWrap}>
@@ -178,8 +182,8 @@ const AboutView = () => {
                                                     </Link>
                                                 </MinTableCell>
                                                 <MinTableCell align="left" style={noWrap}>
-                                                    <Tooltip title={moment(commit.date).toString()}>
-                                                        <span>{moment(commit.date).from()}</span>
+                                                    <Tooltip title={new Date(commit.date).toISOString().replace('T', ' ').slice(0, 16)}>
+                                                        <span>{new Date(commit.date).toISOString().replace('T', ' ').slice(0, 10)}</span>
                                                     </Tooltip>
                                                 </MinTableCell>
                                                 <MinTableCell align="left">
@@ -232,7 +236,7 @@ const AboutView = () => {
                             github.com/NeKzor/cvars
                         </Link>
                     </Tooltip>
-                </Paper>
+                </Root>
             </Fade>
         </ViewContent>
     );

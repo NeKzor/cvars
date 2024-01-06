@@ -1,47 +1,51 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 export class Enum {
-    constructor(...items) {
+    count: number;
+    constructor(...items: any) {
         let value = 0;
         for (let item of items) {
-            this[value] = item;
-            this[item.replace(/ /g, '')] = value;
+            (this as any)[value] = item;
+            (this as any)[item.replace(/ /g, '')] = value;
             ++value;
         }
         this.count = value;
     }
-    static create(...items) {
+    static create(...items: any) {
         return Object.freeze(new Enum(...items));
     }
     getItemList() {
         let items = [];
         for (let idx = 0; idx < this.count; ++idx) {
-            items.push({ value: idx, label: this[idx] });
+            items.push({ value: idx, label: (this as any)[idx] });
         }
         return items;
     }
 }
 
 export class Flags extends Enum {
-    constructor(...items) {
+    constructor(...items: any) {
         super();
         let value = 0;
         for (let item of items) {
-            this[value] = item;
-            this[item.replace(/ /g, '')] = value !== 0 ? 1 << (value - 1) : 0;
+            (this as any)[value] = item;
+            (this as any)[item.replace(/ /g, '')] = value !== 0 ? 1 << (value - 1) : 0;
             ++value;
         }
         this.count = value;
     }
-    static create(...items) {
+    static create(...items: any) {
         return Object.freeze(new Flags(...items));
     }
     all() {
         return (1 << (this.count - 1)) - 1;
     }
-    list(value) {
+    list(value: any) {
         const list = Object.keys(this)
             .filter((k) => k !== 'count' && Number.isNaN(parseInt(k)))
-            .filter((key) => (value & this[key]) !== 0);
-        return list.length !== 0 ? list : [this[0]];
+            .filter((key) => (value & (this as any)[key]) !== 0);
+        return list.length !== 0 ? list : [(this as any)[0]];
     }
 }
 

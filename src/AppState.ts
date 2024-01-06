@@ -1,6 +1,11 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 import React from 'react';
 
 class DarkMode {
+    enabled: boolean;
+
     constructor() {
         this.enabled = localStorage.getItem('dark_mode') === 'true';
     }
@@ -11,7 +16,7 @@ class DarkMode {
     }
 }
 
-const SourceGame = (title, appid) => {
+const SourceGame = (title: string, appid: string) => {
     return {
         ['/' + title.toLowerCase().replace(/[ :]+/g, '-')]: {
             title,
@@ -20,7 +25,7 @@ const SourceGame = (title, appid) => {
     };
 };
 
-const inititalState = {
+export const initialState = {
     games: {
         ...SourceGame('Half-Life 2', '220'),
         ...SourceGame('Half-Life: Source', '280'),
@@ -43,20 +48,17 @@ const inititalState = {
     darkMode: new DarkMode(),
 };
 
-export const AppReducer = [
-    (state, { action }) => {
-        console.log('[DISPATCH] ' + action);
-        switch (action) {
-            case 'toggleDarkMode':
-                return {
-                    ...state,
-                    darkMode: state.darkMode.toggle(),
-                };
-            default:
-                throw new Error('Unknown action type.');
-        }
-    },
-    inititalState,
-];
+export const AppReducer =  (state: typeof initialState, { action }: { action: string; }) => {
+    console.log('[DISPATCH] ' + action);
+    switch (action) {
+        case 'toggleDarkMode':
+            return {
+                ...state,
+                darkMode: state.darkMode.toggle(),
+            };
+        default:
+            throw new Error('Unknown action type.');
+    }
+};
 
-export default React.createContext(inititalState);
+export default React.createContext({ state: initialState, dispatch: (() => void 0) as React.Dispatch<{ action: string }> });

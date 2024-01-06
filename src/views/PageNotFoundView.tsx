@@ -1,15 +1,21 @@
-import React from 'react';
-import Fade from '@material-ui/core/Fade';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
+import Fade from '@mui/material/Fade';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import { useTitle } from '../Hooks';
 import ViewContent from './ViewContent';
 
-const useStyles = makeStyles((theme) => ({
-    infoBox: {
+const PREFIX = 'PageNotFoundView';
+const classes = {
+    infoBox: `${PREFIX}-infoBox`,
+};
+const Root = styled(Paper)(({ theme }) => ({
+    [`&.${classes.infoBox}`]: {
         padding: theme.spacing(3),
     },
 }));
@@ -17,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
 const PageNotFoundView = () => {
     useTitle('404');
 
-    const classes = useStyles();
-
     return (
         <ViewContent>
             <Fade in={true} timeout={500}>
-                <Paper className={classes.infoBox}>
+                <Root>
                     <List dense>
                         <ListItem>
                             <Typography component="h2" variant="h1">
@@ -35,7 +39,7 @@ const PageNotFoundView = () => {
                             </Typography>
                         </ListItem>
                     </List>
-                </Paper>
+                </Root>
             </Fade>
         </ViewContent>
     );

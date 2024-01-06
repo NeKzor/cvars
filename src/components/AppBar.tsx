@@ -1,34 +1,42 @@
+// Copyright (c) 2019-2024, NeKz
+// SPDX-License-Identifier: MIT
+
 import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import MenuIcon from '@mui/icons-material/Menu';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 import AppState from '../AppState';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
+const PREFIX = 'AppBar';
+const classes = {
+  root: `${PREFIX}-root`,
+  appBar: `${PREFIX}-appBar`,
+  menuButton: `${PREFIX}-menuButton`,
+  flex: `${PREFIX}-flex`,
+  list: `${PREFIX}-list`,
+};
+const Root = styled('div')(({ theme }) => ({
+    [`&.${classes.root}`]: {
         paddingBottom: theme.spacing(8),
     },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
-    menuButton: {
+    [`& .${classes.menuButton}`]: {
         marginLeft: -12,
         marginRight: 20,
     },
-    flex: {
+    [`& .${classes.flex}`]: {
         flex: 1,
     },
-    list: {
+    [`& .${classes.list}`]: {
         width: theme.spacing(25),
     },
 }));
@@ -43,40 +51,38 @@ const AppBarWithDrawer = () => {
 
     const [open, setOpen] = React.useState(false);
 
-    const showDrawer = (open) => () => {
+    const showDrawer = (open: boolean) => () => {
         setOpen(open);
     };
 
-    const classes = useStyles();
-
     const list = (
-        <div className={classes.list}>
+        <Root className={classes.root}>
             <List>
-                <ListItem button key={0} component={RouterLink} to={'/'}>
+                <ListItemButton key={0} component={RouterLink} to={'/'}>
                     <ListItemText primary={'Cvars'} />
-                </ListItem>
+                </ListItemButton>
             </List>
             <Divider />
             <List>
                 {Object.keys(games).map((route, index) => {
                     return (
-                        <ListItem button key={index} component={RouterLink} to={route}>
+                        <ListItemButton key={index} component={RouterLink} to={route}>
                             <ListItemText primary={games[route].title} />
-                        </ListItem>
+                        </ListItemButton>
                     );
                 })}
             </List>
             <Divider />
             <List>
-                <ListItem button key={0} component={RouterLink} to={'/about'}>
+                <ListItemButton key={0} component={RouterLink} to={'/about'}>
                     <ListItemText primary={'About'} />
-                </ListItem>
+                </ListItemButton>
             </List>
-        </div>
+        </Root>
     );
 
     return (
-        <div className={classes.root}>
+        <Root className={classes.root}>
             <AppBar className={classes.appBar} position="fixed">
                 <Toolbar>
                     <IconButton className={classes.menuButton} onClick={showDrawer(true)} color="inherit">
@@ -94,7 +100,7 @@ const AppBarWithDrawer = () => {
                     {list}
                 </div>
             </SwipeableDrawer>
-        </div>
+        </Root>
     );
 };
 
