@@ -53,7 +53,8 @@ const App = () => {
                     main: red.A400,
                 },
                 background: {
-                    default: '#fafafa',
+                    default: state.darkMode.enabled ? '#303030' : '#fafafa',
+                    paper: state.darkMode.enabled ? '#303030' : '#fff',
                 },
                 mode: state.darkMode.enabled ? 'dark' : 'light',
             },
@@ -63,58 +64,60 @@ const App = () => {
     const context = React.useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <AppState.Provider value={context}>
-                <BrowserRouter>
-                    <AppBar />
-                    <Root className={classes.views}>
-                        <Routes>
-                            <Route path="/hl2" element={<Redirect to="/half-life-2" />} />
-                            <Route path="/p1" element={<Redirect to="/portal" />} />
-                            <Route path="/p2" element={<Redirect to="/portal-2" />} />
-                            <Route path="/tbg" element={<Redirect to="/the-beginners-guide" />} />
-                            <Route path="/tsp" element={<Redirect to="/the-stanley-parable" />} />
-                            <Route path="/bm" element={<Redirect to="/black-mesa" />} />
-                            <Route path="/csgo" element={<Redirect to="/global-offensive" />} />
-                            <Route path="/p2s" element={<Redirect to="/portal-2-sixense" />} />
-                            <Route path="/asw" element={<Redirect to="/alien-swarm" />} />
-                            <Route path="/css" element={<Redirect to="/counter-strike-source" />} />
-                            <Route path="/hls" element={<Redirect to="/half-life-source" />} />
-                            <Route path="/tf2" element={<Redirect to="/team-fortress-2" />} />
-                            <Route path="/d2" element={<Redirect to="/dota-2" />} />
-                            <Route path="/lab" element={<Redirect to="/the-lab" />} />
-                            <Route path="/l4d2" element={<Redirect to="/left-4-dead-2" />} />
-                            <Route path="/p2ce" element={<Redirect to="/portal-2-community-edition" />} />
-                            <Route path="/" Component={MainView} />
-                            <Route path="/half-life-2" key="hl2" Component={CvarsView} />
-                            <Route path="/portal" key="p1" Component={CvarsView} />
-                            <Route path="/portal-2" key="p2" Component={CvarsView} />
-                            <Route path="/the-beginners-guide" key="tbg" Component={CvarsViewWithCheckbox} />
-                            <Route path="/the-stanley-parable" key="tsp" Component={CvarsViewWithCheckbox} />
-                            <Route path="/infra" key="infra" Component={CvarsViewWithCheckbox} />
-                            <Route path="/black-mesa" key="bm" Component={CvarsViewWithCheckbox} />
-                            <Route path="/global-offensive" key="csgo" Component={CvarsView} />
-                            <Route path="/portal-2-sixense" key="p2s" Component={CvarsViewWithCheckbox} />
-                            <Route path="/alien-swarm" key="asw" Component={CvarsView} />
-                            <Route path="/counter-strike-source" key="css" Component={CvarsView} />
-                            <Route path="/half-life-source" key="hls" Component={CvarsView} />
-                            <Route path="/team-fortress-2" key="tf2" Component={CvarsView} />
-                            <Route path="/dota-2" key="d2" Component={CvarsView} />
-                            <Route path="/the-lab" key="lab" Component={CvarsView} />
-                            <Route path="/left-4-dead-2" key="l4d2" Component={CvarsView} />
-                            <Route
-                                path="/portal-2-community-edition"
-                                key="p2ce"
-                                Component={CvarsViewWithCheckbox}
-                            />
-                            <Route path="/about" key="about" Component={AboutView} />
-                            <Route Component={PageNotFoundView} />
-                        </Routes>
-                    </Root>
-                </BrowserRouter>
-            </AppState.Provider>
-        </ThemeProvider>
+        <React.StrictMode>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AppState.Provider value={context}>
+                    <BrowserRouter>
+                        <AppBar />
+                        <Root className={classes.views}>
+                            <Routes>
+                                <Route path="/hl2" element={<Redirect to="/half-life-2" />} />
+                                <Route path="/p1" element={<Redirect to="/portal" />} />
+                                <Route path="/p2" element={<Redirect to="/portal-2" />} />
+                                <Route path="/tbg" element={<Redirect to="/the-beginners-guide" />} />
+                                <Route path="/tsp" element={<Redirect to="/the-stanley-parable" />} />
+                                <Route path="/bm" element={<Redirect to="/black-mesa" />} />
+                                <Route path="/csgo" element={<Redirect to="/global-offensive" />} />
+                                <Route path="/p2s" element={<Redirect to="/portal-2-sixense" />} />
+                                <Route path="/asw" element={<Redirect to="/alien-swarm" />} />
+                                <Route path="/css" element={<Redirect to="/counter-strike-source" />} />
+                                <Route path="/hls" element={<Redirect to="/half-life-source" />} />
+                                <Route path="/tf2" element={<Redirect to="/team-fortress-2" />} />
+                                <Route path="/d2" element={<Redirect to="/dota-2" />} />
+                                <Route path="/lab" element={<Redirect to="/the-lab" />} />
+                                <Route path="/l4d2" element={<Redirect to="/left-4-dead-2" />} />
+                                <Route path="/p2ce" element={<Redirect to="/portal-2-community-edition" />} />
+                                <Route path="/" Component={MainView} />
+                                <Route path="/half-life-2" key="hl2" Component={CvarsView} />
+                                <Route path="/portal" key="p1" Component={CvarsView} />
+                                <Route path="/portal-2" key="p2" Component={CvarsView} />
+                                <Route path="/the-beginners-guide" key="tbg" Component={CvarsViewWithCheckbox} />
+                                <Route path="/the-stanley-parable" key="tsp" Component={CvarsViewWithCheckbox} />
+                                <Route path="/infra" key="infra" Component={CvarsViewWithCheckbox} />
+                                <Route path="/black-mesa" key="bm" Component={CvarsViewWithCheckbox} />
+                                <Route path="/global-offensive" key="csgo" Component={CvarsView} />
+                                <Route path="/portal-2-sixense" key="p2s" Component={CvarsViewWithCheckbox} />
+                                <Route path="/alien-swarm" key="asw" Component={CvarsView} />
+                                <Route path="/counter-strike-source" key="css" Component={CvarsView} />
+                                <Route path="/half-life-source" key="hls" Component={CvarsView} />
+                                <Route path="/team-fortress-2" key="tf2" Component={CvarsView} />
+                                <Route path="/dota-2" key="d2" Component={CvarsView} />
+                                <Route path="/the-lab" key="lab" Component={CvarsView} />
+                                <Route path="/left-4-dead-2" key="l4d2" Component={CvarsView} />
+                                <Route
+                                    path="/portal-2-community-edition"
+                                    key="p2ce"
+                                    Component={CvarsViewWithCheckbox}
+                                />
+                                <Route path="/about" key="about" Component={AboutView} />
+                                <Route Component={PageNotFoundView} />
+                            </Routes>
+                        </Root>
+                    </BrowserRouter>
+                </AppState.Provider>
+            </ThemeProvider>
+        </React.StrictMode>
     );
 };
 

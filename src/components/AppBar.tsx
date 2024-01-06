@@ -16,6 +16,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import AppState from '../AppState';
+import Box from '@mui/material/Box';
+import { DarkMode, LightMode } from '@mui/icons-material';
 
 const PREFIX = 'AppBar';
 const classes = {
@@ -45,7 +47,8 @@ const AppBarWithDrawer = () => {
     const { pathname } = useLocation();
 
     const {
-        state: { games },
+        state: { games, darkMode },
+        dispatch,
     } = React.useContext(AppState);
     const game = games[pathname];
 
@@ -54,6 +57,10 @@ const AppBarWithDrawer = () => {
     const showDrawer = (open: boolean) => () => {
         setOpen(open);
     };
+
+    const toggleDarkMode = (() => {
+        dispatch({ action: 'toggleDarkMode' });
+    });
 
     const list = (
         <Root className={classes.root}>
@@ -83,7 +90,7 @@ const AppBarWithDrawer = () => {
 
     return (
         <Root className={classes.root}>
-            <AppBar className={classes.appBar} position="fixed">
+            <AppBar className={classes.appBar} position="fixed" color="primary" enableColorOnDark>
                 <Toolbar>
                     <IconButton className={classes.menuButton} onClick={showDrawer(true)} color="inherit">
                         <MenuIcon />
@@ -93,6 +100,17 @@ const AppBarWithDrawer = () => {
                             {game ? game.title + ' Cvars' : pathname === '/about' ? 'About' : 'Cvars'}
                         </Link>
                     </Typography>
+                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="Toggle Light/Dark Theme"
+                            color="inherit"
+                            onClick={toggleDarkMode}
+                        >
+                            {darkMode.enabled ? <LightMode /> : <DarkMode />}
+                        </IconButton>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <SwipeableDrawer open={open} onClose={showDrawer(false)} onOpen={showDrawer(true)} variant="temporary">

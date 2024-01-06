@@ -8,9 +8,6 @@ import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -67,11 +64,6 @@ const AboutView = () => {
 
     useTitle('About');
 
-    const {
-        state: { darkMode },
-        dispatch,
-    } = React.useContext(AppState);
-
     const [gitHub, setGitHub] = React.useState<any>([]);
 
     React.useEffect(() => {
@@ -101,10 +93,6 @@ const AboutView = () => {
             })
             .catch(anyErrors);
     }, [isMounted]);
-
-    const toggleDarkMode = () => {
-        dispatch({ action: 'toggleDarkMode' });
-    };
 
     return (
         <ViewContent>
@@ -217,17 +205,6 @@ const AboutView = () => {
                             </Table>
                         </div>
                     )}
-
-                    <Padding />
-
-                    <Typography variant="h5">Theme Settings</Typography>
-                    <br />
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={<Switch checked={darkMode.enabled} onChange={toggleDarkMode} color="primary" />}
-                            label="Dark Mode"
-                        />
-                    </FormGroup>
 
                     <Padding />
 
