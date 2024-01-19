@@ -231,7 +231,11 @@ impl Module for Console {
             self.log_color = Some(std::mem::transmute::<_, LoggingSystemLogColor>(
                 get_symbol_address(
                     handle,
-                    "_Z17LoggingSystem_Logi17LoggingSeverity_t5ColorPKcz",
+                    if cfg!(target_os = "windows") {
+                        "?LoggingSystem_Log@@YA?AW4LoggingResponse_t@@HW4LoggingSeverity_t@@VColor@@PEBDZZ"
+                    } else {
+                        "_Z17LoggingSystem_Logi17LoggingSeverity_t5ColorPKcz"
+                    },
                 ),
             ));
             self.log_direct = Some(std::mem::transmute::<_, LoggingSystemLogDirect>(
