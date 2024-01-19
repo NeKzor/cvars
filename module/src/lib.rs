@@ -1,11 +1,7 @@
 // Copyright (c) 2020, NeKz
 // SPDX-License-Identifier: MIT
 
-extern crate ctor;
-extern crate libc;
-#[cfg(windows)]
-extern crate winapi;
-
+#[cfg(linux)]
 use ctor::*;
 
 #[macro_use]
@@ -14,9 +10,6 @@ mod mem;
 mod modules;
 mod offsets;
 mod sdk;
-
-#[allow(dead_code)]
-fn main() {}
 
 static mut CONSOLE: Option<modules::Console> = None;
 static mut TIER1: Option<modules::Tier1> = None;

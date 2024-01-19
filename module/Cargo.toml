@@ -2,11 +2,11 @@
 name = "cvars"
 version = "1.0.0"
 authors = ["NeKz <nekzor@users.noreply.github.com>"]
-edition = "2018"
+edition = "2021"
 
 [lib]
-crate-type = ["dylib"]
-path = "src/main.rs"
+crate-type = ["cdylib"]
+path = "src/lib.rs"
 bench = false
 
 [features]
@@ -18,7 +18,10 @@ dota2 = []
 vr = []
 
 [dependencies]
-ctor = "0.1.14"
 libc = "0.2"
+
+[target.'cfg(linux)'.dependencies]
+ctor = "0.1.14"
+
 [target.'cfg(windows)'.dependencies]
 winapi = { version = "0.3.8", features = ["libloaderapi"] }
