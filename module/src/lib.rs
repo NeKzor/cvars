@@ -1,9 +1,6 @@
 // Copyright (c) 2020, NeKz
 // SPDX-License-Identifier: MIT
 
-#[cfg(linux)]
-use ctor::*;
-
 #[macro_use]
 mod macros;
 mod mem;
@@ -115,7 +112,7 @@ pub unsafe extern "stdcall" fn dll_main(
 }
 
 #[cfg(target_os = "linux")]
-#[ctor]
+#[ctor::ctor]
 unsafe fn ctor() {
     init().unwrap();
 }

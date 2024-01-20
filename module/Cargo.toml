@@ -20,7 +20,7 @@ vr = []
 [dependencies]
 libc = "0.2"
 
-[target.'cfg(linux)'.dependencies]
+[target.'cfg(unix)'.dependencies]
 ctor = "0.1.14"
 
 [target.'cfg(windows)'.dependencies]
